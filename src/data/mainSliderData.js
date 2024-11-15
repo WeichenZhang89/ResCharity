@@ -38,9 +38,9 @@ export const mainSliderCounter = [
   //   count: 4390,
   //   title: "Volunteers are Available",
   // },
-  {
+  /*{
     id: 1,
     count: 8900,
     title: "Funds Raised by People",
-  },
+  },*/
 ];
