@@ -1,4 +1,3 @@
-import { social } from "@/data/NavItems";
 import newsDetails from "@/data/newsDetails";
 import React from "react";
 import { Image } from "react-bootstrap";
@@ -54,13 +53,6 @@ const NewsDetailsLeft = () => {
             </a>
           ))}
         </p>
-        <div className="news-details__social-list">
-          {social.map(({ icon, href }, index) => (
-            <a href={href} key={index}>
-              <i className={`fab ${icon}`}></i>
-            </a>
-          ))}
-        </div>
       </div>
       <div className="author-one">
         <div className="author-one__image">
