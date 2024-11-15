@@ -2,7 +2,7 @@ import { MongoClient } from 'mongodb';
 
 const targetPublicKey = "CAvCqZP5xqk7E9baKSvAoFZazYYjNbgrgtnDicVMb25i";
 
-export async function GET() {
+export async function GET(request) {
   const client = new MongoClient(process.env.MONGODB_URI || 'mongodb://localhost:27017');
 
   try {
