@@ -24,20 +24,28 @@ const AboutPage = () => {
           <Col xl={6}>
             <div className="about-page__right">
               <div className="section-title text-left">
-                <span className="section-title__tagline">Our Inroductions</span>
+                <span className="section-title__tagline">Our Technology</span>
                 <h2 className="section-title__title">
-                  We believe that we can save more lifes
+                  Distributed StorageTechnology
                 </h2>
               </div>
               <p className="about-page__right-text">
-                We are trusted by our clients and have a reputation for the best
-                services in the field. Lorem ipsum is simply free text dolor sit
-                amett consectetur adipiscing elit. It is a long established fact
-                that a reader will be distracted by the readable content of a
-                page.
+                Our donation system utilizes ResDB, a distributed storage
+                technology, toensure the security and reliability of user
+                contributions. By distributing dataacross multiple nodes, this
+                architecture provides high availability and faulttolerance,
+                safeguarding user information. Many leading technology
+                companieshave adopted distributed storage solutions to manage
+                their extensive dataprocessing needs. This setup allows multiple
+                users to donate simultaneouslywith the system efficiently
+                handling concurrent reguests to accurately recordand process
+                each contribution, Additionally, the scalability of
+                distributedstorage enables our system to adapt to increasing
+                donation volumes,consistently delivering stable and dependable
+                services
               </p>
               <h3 className="about-page__right-title">
-                Halpes is the largest global crowdfunding community in the world
+                ResCharity is the safest and most reliable donation platform
               </h3>
               <div className="about-five__progress-wrap">
                 {aboutProgress.map((progress) => (
