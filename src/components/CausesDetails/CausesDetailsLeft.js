@@ -3,9 +3,7 @@ import { social } from "@/data/NavItems";
 import download from "@/images/resources/causes-details-download-icon.png";
 import React, { useState } from "react";
 import { Col, Image, Row } from "react-bootstrap";
-import CommentForm from "../CommentForm/CommentForm";
-import SingleComment from "./SingleComment";
-import Link from 'next/link';
+import Link from "next/link";
 const {
   comments,
   summaryList,
@@ -126,13 +124,13 @@ const CausesDetailsLeft = () => {
           </a>
         </div>
       </div> */}
-      <div className="comment-one">
+      {/* <div className="comment-one">
         <h3 className="comment-one__title">Comments</h3>
         {comments.map((comment) => (
           <SingleComment key={comment.id} comment={comment} />
         ))}
       </div>
-      <CommentForm />
+      <CommentForm /> */}
     </div>
   );
 };

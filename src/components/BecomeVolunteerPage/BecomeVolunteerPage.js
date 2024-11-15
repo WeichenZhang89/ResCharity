@@ -47,7 +47,7 @@ const BecomeVolunteerPage = () => {
                 </div>
                 <div className="become-volunteer-page__phone-text">
                   <p>Call Anytime</p>
-                  <a href="tel:92 666 888 0000">92 666 888 0000</a>
+                  <a href="tel:1 420 233 6722">1 420 233 6722</a>
                 </div>
               </div>
             </div>
