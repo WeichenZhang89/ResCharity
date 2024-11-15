@@ -7223,7 +7223,7 @@ h6 {
   display: block;
   padding: 100px 0 100px;
   /* 或者使用 rgba 来调整透明度 */
-  background-color: rgba(26, 26, 46, 0.95); /* 带透明度的深蓝色 */
+  background-color: rgba(240, 240, 245, 0.95); /* 带透明度的深蓝色 */
 
   background-size: cover;
   background-position: center;
@@ -7231,7 +7231,7 @@ h6 {
 }
 
 .donate-page .form-container {
-  background-color: rgba(26, 26, 46, 0.9);
+  background-color: rgba(31, 34, 48, 0.95);
   padding: 30px;
   border-radius: 8px;
   border: 1px solid #4e4e68;
