@@ -2,6 +2,7 @@ import footerData from "@/data/footerData";
 import Link from "next/link";
 import React from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
+import logo from "@/images/ResDB_logo.png";
 
 const {
   about,
@@ -21,20 +22,23 @@ const SiteFooter = () => {
       <Container>
         <div className="site-footer__top">
           <Row>
-            <Col xl={3} lg={6} md={6} className="fadeInUp">
+            <Col xl={6} lg={6} md={6} className="fadeInUp">
               <div className="footer-widget__column footer-widget__about">
-                <h3 className="footer-widget__title">About</h3>
-                <p className="footer-widget__text">{about}</p>
-              </div>
-            </Col>
-            <Col
-              xl={3}
-              lg={6}
-              md={6}
-              className="wow fadeInUp"
-              data-wow-delay="400ms"
-            >
-              <div className="footer-widget__column footer-widget__newsletter">
+                <div className="footer-widget__about-content">
+                  <div className="footer-widget__logo">
+                    <Image 
+                      src={logo.src}
+                      alt="ResDB Logo"
+                      width={150}
+                      height={90}
+                      style={{ objectFit: 'contain' }}
+                    />
+                  </div>
+                  <div className="footer-widget__text">
+                    <h3 className="footer-widget__title">About</h3>
+                    <p>{about}</p>
+                  </div>
+                </div>
               </div>
             </Col>
           </Row>
