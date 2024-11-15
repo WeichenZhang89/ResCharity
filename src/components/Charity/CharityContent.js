@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Col } from "react-bootstrap";
 import ReactVisibilitySensor from "react-visibility-sensor";
+import Link from "next/link";
 
 const countBar = [
   {
@@ -30,14 +31,15 @@ const CharityContent = () => {
         <div className="section-title text-left">
           <span className="section-title__tagline">Welcome to ResCharity</span>
           <h2 className="section-title__title">
-            Yolo County SPCA Community Cat Kindness Fund</h2>
+            Yolo County SPCA Community Cat Kindness Fund
+          </h2>
         </div>
         <p className="welcome-one__right-text">
           The Community Cat Kindness Fund has been set up by the Yolo County
-          SPCA to help provide care for community cats including veterinary
-          care and humane euthanasia when needed for medical reasons. Even with
-          discounted services, paying for the veterinary care for community
-          cats is often a hardship on volunteers. This fund will help caring cat
+          SPCA to help provide care for community cats including veterinary care
+          and humane euthanasia when needed for medical reasons. Even with
+          discounted services, paying for the veterinary care for community cats
+          is often a hardship on volunteers. This fund will help caring cat
           lovers to assist community cats in need. All contributors will receive
           a thank you from the Yolo County SPCA with a tax-deductible receipt.
         </p>
@@ -89,9 +91,11 @@ const CharityContent = () => {
             </div>
           ))}
         </div>
-        <a href="#" className="welcome-one__btn thm-btn">
-          <i className="fas fa-arrow-circle-right"></i>Learn More
-        </a>
+        <Link href="/causes">
+          <a className="welcome-one__btn thm-btn">
+            <i className="fas fa-arrow-circle-right"></i>Learn More
+          </a>
+        </Link>
       </div>
     </Col>
   );
