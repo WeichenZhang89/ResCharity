@@ -8,6 +8,13 @@ const truncateId = (id) => {
   return `${id.slice(0, 6)}...${id.slice(-4)}`;
 };
 
+const formatAmount = (amount) => {
+  return amount.toLocaleString('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  });
+};
+
 const CausesDetailsRight = ({ causeId }) => {
   const { transactions, loading, error, getTransactions } = useTransactions();
   const [showAll, setShowAll] = useState(false);
@@ -76,7 +83,7 @@ const CausesDetailsRight = ({ causeId }) => {
               {displayedTransactions.map((transaction) => (
                 <li key={transaction.id}>
                   <div className="causes-details__donations-content">
-                    <h4>${transaction.amount}</h4>
+                    <h4>${formatAmount(transaction.amount)}</h4>
                     <p>ID: {truncateId(transaction.id)}</p>
                   </div>
                 </li>
