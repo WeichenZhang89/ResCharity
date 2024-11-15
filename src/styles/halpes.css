@@ -2187,12 +2187,12 @@ h6 {
 .causes-one__img-box > a i:hover {
   color: #ffffff;
 }
-
+/* 
 .causes-one__single:hover .causes-one__img-box > a {
   visibility: visible;
   transform: translateY(0%);
   opacity: 1;
-}
+} */
 
 .causes-one__category {
   position: absolute;
@@ -7004,17 +7004,6 @@ h6 {
 
 .gallery-page__img-box img {
   width: 100%;
-  -webkit-transform: scale(1);
-  transform: scale(1);
-  -webkit-transition: opacity 500ms ease, -webkit-transform 500ms ease;
-  transition: opacity 500ms ease, -webkit-transform 500ms ease;
-  transition: transform 500ms ease, opacity 500ms ease;
-  transition: transform 500ms ease, opacity 500ms ease,
-    -webkit-transform 500ms ease;
-}
-
-.gallery-page__single:hover .gallery-page__img-box img {
-  transform: scale(1.05);
 }
 
 .gallery-page__hover-content-box {
