@@ -144,13 +144,6 @@ const SiteFooter = () => {
                       </a>
                     </Link>
                   </div>
-                  <div className="site-footer__bottom-social">
-                    {social.map(({ id, icon, href }) => (
-                      <a href={href} key={id}>
-                        <i className={`fab ${icon}`}></i>
-                      </a>
-                    ))}
-                  </div>
                 </div>
                 <div className="site-footer__bottom-copy-right">
                   <p>
