@@ -26,33 +26,6 @@ const HeaderTwo = () => {
             <div className="main-header-two__contact-info">
               <ul className="main-header-two__contact-list list-unstyled">
                 {/* 删除或修改这三个 li 元素 */}
-                {/* <li>
-                  <div className="main-header-two__contact-icon">
-                    <span className="icon-chat"></span>
-                  </div>
-                  <div className="main-header-two__contact-text">
-                    <p>Call Anytime</p>
-                    <a href="tel:92 666 888 0000">92 666 888 0000</a>
-                  </div>
-                </li>
-                <li>
-                  <div className="main-header-two__contact-icon">
-                    <span className="icon-message"></span>
-                  </div>
-                  <div className="main-header-two__contact-text">
-                    <p>Send Email</p>
-                    <a href="mailto:needhelp@company.com">needhelp@company.com</a>
-                  </div>
-                </li>
-                <li>
-                  <div className="main-header-two__contact-icon">
-                    <span className="icon-address"></span>
-                  </div>
-                  <div className="main-header-two__contact-text">
-                    <p>Visit Office</p>
-                    <h5>80 broklyn golden street</h5>
-                  </div>
-                </li> */}
               </ul>
               <div className="main-header-two__btn">
                 <Link href="/causes-details" legacyBehavior>
@@ -100,15 +73,6 @@ const HeaderTwo = () => {
                     </a>
                   ))}
                 </div>
-                <span
-                  onClick={toggleSearch}
-                  style={{ cursor: "pointer" }}
-                  className="main-menu__search search-toggler icon-magnifying-glass"
-                ></span>
-                <a
-                  href="#"
-                  className="main-menu__cart icon-shopping-cart  "
-                ></a>
               </div>
             </div>
           </Container>
