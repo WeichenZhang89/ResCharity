@@ -9,7 +9,7 @@
       "@/context/*": ["src/context/*"],
       "@/hooks/*": ["src/hooks/*"],
       "@/data/*": ["src/data/*"],
-      "@/api/*": ["src/api/*"]
+      "@/api/*": ["src/app/api/*"]
     }
   }
 }

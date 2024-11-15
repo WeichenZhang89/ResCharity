@@ -7416,3 +7416,19 @@ h6 {
   max-width: 100%;
   height: auto;
 }
+
+.toggle-button {
+  background: #15c8a0;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.toggle-button:hover {
+  background: #000000;
+}
