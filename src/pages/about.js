@@ -13,11 +13,11 @@ const About = () => {
     <Layout pageTitle="About">
       <PageHeader pageTitle="About" />
       <AboutPage />
-      <TestimonialOne className="about-page-testimonial" />
-      <JoinOne className="join-one__about" />
-      <Counters className="about-page-counter" />
+      {/* <TestimonialOne className="about-page-testimonial" />
+      <JoinOne className="join-one__about" /> */}
+      {/* <Counters className="about-page-counter" />
       <TeamOne />
-      <BrandOne />
+      <BrandOne /> */}
     </Layout>
   );
 };
