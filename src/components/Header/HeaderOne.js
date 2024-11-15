@@ -1,5 +1,5 @@
 import { useRootContext } from "@/context/context";
-import navItems, { social } from "@/data/NavItems";
+import navItems from "@/data/NavItems";
 import useScroll from "@/hooks/useScroll";
 import logo from "@/images/ResDB_logo.png";
 import Link from "next/link";
@@ -19,9 +19,9 @@ const HeaderOne = () => {
             <Image
               src={logo.src}
               alt="Logo"
-              width={90} // Set specific width
-              height={55} // Set specific height
-              objectFit="cover" // This ensures the image maintains its aspect ratio
+              width={90}
+              height={55}
+              objectFit="cover"
             />
           </a>
         </Link>
@@ -34,26 +34,9 @@ const HeaderOne = () => {
                 <div className="main-menu-wrapper__left-text">
                   <p>Welcome to the ResCharity</p>
                 </div>
-                <div className="main-menu-wrapper__left-email-box">
-                  <div className="icon">
-                    <i className="fas fa-envelope"></i>
-                  </div>
-                  <div className="email">
-                    <a href="mailto:needhelp@company.com">
-                      needhelp@company.com
-                    </a>
-                  </div>
-                </div>
               </div>
             </div>
             <div className="main-menu-wrapper__right">
-              <div className="main-menu-wrapper__right-social">
-                {social.map(({ icon, link }, index) => (
-                  <a href={link} key={index}>
-                    <i className={`fab ${icon}`}></i>
-                  </a>
-                ))}
-              </div>
             </div>
           </div>
         </div>
