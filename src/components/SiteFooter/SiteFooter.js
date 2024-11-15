@@ -2,6 +2,7 @@ import footerData from "@/data/footerData";
 import Link from "next/link";
 import React from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
+import { contact } from "@/data/contactData";
 
 const {
   exploreList,
@@ -17,6 +18,8 @@ const {
 } = footerData;
 
 const SiteFooter = () => {
+  const { tel, email, officeAddress } = contact;
+
   return (
     <footer className="site-footer">
       <div
