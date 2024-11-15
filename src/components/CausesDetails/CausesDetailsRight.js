@@ -23,7 +23,14 @@ const CausesDetailsRight = () => {
       }
       const data = await response.json();
       console.log('Received transactions:', data.length);
-      console.log('First transaction:', data[0]); // Log first transaction to check data structure
+        console.log('Raw transaction data:', JSON.stringify(data[0], null, 2));
+      console.log('Transaction structure:', {
+        id: data[0]?.transaction?.value?.id,
+        cmd: data[0]?.transaction?.cmd,
+        inputs: data[0]?.transaction?.value?.inputs,
+        outputs: data[0]?.transaction?.value?.outputs,
+        timestamp: data[0]?.transaction?.value?.asset?.data?.timestamp
+      });
 
       const sortedData = data.sort((a, b) => {
         const amountA = parseInt(a.transaction.value.outputs[0].amount);
@@ -47,10 +54,10 @@ const CausesDetailsRight = () => {
       <div className="causes-details__transactions">
         <h3>Transactions</h3>
         {displayedTransactions.map((tx, index) => {
-          const receiver = tx.transaction.value.outputs[0].public_keys[0];
+          const sender = tx.transaction.value.inputs[0].owners_before[0];
           return (
             <div key={index} className="transaction-item">
-              <p><strong>Receiver:</strong> {truncateString(receiver, 6, 4)}</p>
+              <p><strong>Sender:</strong> {truncateString(sender, 6, 4)}</p>
               <p><strong>Transaction ID:</strong> {truncateString(tx.transaction.value.id, 8, 6)}</p>
               <p><strong>Amount:</strong> {tx.transaction.value.outputs[0].amount}</p>
               <hr />

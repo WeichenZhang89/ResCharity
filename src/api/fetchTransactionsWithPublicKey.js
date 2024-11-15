@@ -19,17 +19,17 @@ const targetPublicKey = "CAvCqZP5xqk7E9baKSvAoFZazYYjNbgrgtnDicVMb25i";
 
     console.log('Connected to MongoDB for fetching transactions.');
 
-    // Create an index on transactions.value.outputs[0].public_keys[0] for optimized querying
-    const indexName = await collection.createIndex({ "transactions.value.outputs[0].public_keys[0]": 1 });
-    console.log(`Index created: ${indexName} on transactions.value.outputs[0].public_keys[0]`);
+    // Create an index on transactions.value.inputs.owners_before for optimized querying
+    const indexName = await collection.createIndex({ "transactions.value.inputs.owners_before": 1 });
+    console.log(`Index created: ${indexName} on transactions.value.inputs.owners_before`);
 
-    // Define aggregation pipeline to fetch all transactions for the specified publicKey in outputs
+    // Define aggregation pipeline to fetch all transactions for the specified publicKey in owners_before
     const pipeline = [
       { $unwind: "$transactions" },
-      { $unwind: "$transactions.value.outputs[0]" },
+      { $unwind: "$transactions.value.inputs" },
       { 
         $match: { 
-          "transactions.value.outputs[0].public_keys[0]": targetPublicKey 
+          "transactions.value.inputs.owners_before": targetPublicKey 
         }
       },
       { $sort: { "transactions.value.asset.data.timestamp": -1 } },
@@ -40,7 +40,7 @@ const targetPublicKey = "CAvCqZP5xqk7E9baKSvAoFZazYYjNbgrgtnDicVMb25i";
     const transactions = await cursor.toArray();
 
     if (transactions.length > 0) {
-      console.log('Transactions with the specified publicKey in outputs:', 
+      console.log('Transactions with the specified publicKey in owners_before:', 
                   JSON.stringify(transactions, null, 2));
     } else {
       console.log(`No transactions found for publicKey: ${targetPublicKey}`);

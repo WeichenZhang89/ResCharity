@@ -20,10 +20,16 @@ export async function GET() {
 
     const pipeline = [
       { $unwind: "$transactions" },
-      { $unwind: "$transactions.value.inputs" },
       { 
         $match: { 
-          "transactions.value.inputs.owners_before": targetPublicKey 
+          "$or": [
+            //{ "transactions.value.inputs.owners_before": { $in: [targetPublicKey] } },
+            { "transactions.value.outputs": { 
+              $elemMatch: { 
+                "public_keys.0": targetPublicKey 
+              }
+            }}
+          ]
         }
       },
       { $sort: { "transactions.value.asset.data.timestamp": -1 } },

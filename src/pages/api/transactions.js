@@ -22,17 +22,22 @@ export default async function handler(req, res) {
     });
 
     const pipeline = [
-      { $unwind: "$transactions" },
-      { $unwind: "$transactions.value.inputs" },
-      { 
-        $match: { 
-          "transactions.value.inputs.owners_before": targetPublicKey 
-        }
-      },
-      { $sort: { "transactions.value.asset.data.timestamp": -1 } },
-      { $project: { transaction: "$transactions", _id: 0 } }
-    ];
-
+        { $unwind: "$transactions" },
+        { 
+          $match: { 
+            "$or": [
+              //{ "transactions.value.inputs.owners_before": { $in: [targetPublicKey] } },
+              { "transactions.value.outputs": { 
+                $elemMatch: { 
+                  "public_keys.0": targetPublicKey 
+                }
+              }}
+            ]
+          }
+        },
+        { $sort: { "transactions.value.asset.data.timestamp": -1 } },
+        { $project: { transaction: "$transactions", _id: 0 } }
+      ];
     const transactions = await collection.aggregate(pipeline).toArray();
     console.log('Number of transactions found:', transactions.length);
     
