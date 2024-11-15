@@ -15,7 +15,7 @@ const NavItem = ({ item = {} }) => {
     setExpand((preExpand) => !preExpand);
   };
 
-  const { name, href, subNavItems } = item;
+  const { name, href, subNavItems = [] } = item;
 
   return (
     <li className={`dropdown${pathname === href ? " current" : ""}`}>
@@ -23,18 +23,20 @@ const NavItem = ({ item = {} }) => {
         href={href}
         className={expand ? " expanded" : ""}
         onClick={(e) => {
-          if (subNavItems.length) {
+          if (subNavItems?.length) {
             e.preventDefault();
             handleExpand(e);
           }
         }}
       >
-        {name}
-        {subNavItems.length > 0 && (
-          <button onClick={handleExpand} aria-label="dropdown toggler">
-            <i className="fa fa-angle-down"></i>
-          </button>
-        )}
+        <span className="nav-link-wrapper">
+          {name}
+          {subNavItems?.length > 0 && (
+            <button onClick={handleExpand} aria-label="dropdown toggler">
+              <i className="fa fa-angle-down"></i>
+            </button>
+          )}
+        </span>
       </Link>
       <ul
         style={{

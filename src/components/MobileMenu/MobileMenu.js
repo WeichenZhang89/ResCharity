@@ -1,6 +1,6 @@
 import { useRootContext } from "@/context/context";
 import navItems, { social } from "@/data/NavItems";
-import logo from "@/images/resources/logo-1.png";
+import logo from "@/images/ResDB_logo.png";
 import Link from "next/link";
 import React from "react";
 import { Image } from "react-bootstrap";

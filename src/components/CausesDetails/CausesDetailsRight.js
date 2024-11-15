@@ -1,43 +1,36 @@
-import organizer from "@/images/resources/causes-details-organizar-img-1.jpg";
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Image } from "react-bootstrap";
+import { useTransactions } from "@/hooks/useTransactions";
+import organizer from "@/images/resources/causes-details-organizar-img-1.jpg";
 
-const donations = [
-  {
-    id: 1,
-    image: "recent-donation-img-1.jpg",
-    amount: 20,
-    name: "David Marks",
-    time: "3 hours ago",
-    text: "God bless you dear",
-  },
-  {
-    id: 2,
-    image: "recent-donation-img-2.jpg",
-    amount: 60,
-    name: "Jessica Rose",
-    time: "6 hours ago",
-    text: "God bless you dear",
-  },
-  {
-    id: 3,
-    image: "recent-donation-img-3.jpg",
-    amount: 30,
-    name: "Kevim Martin",
-    time: "1 day ago",
-    text: "God bless you dear",
-  },
-  {
-    id: 4,
-    image: "recent-donation-img-4.jpg",
-    amount: 180,
-    name: "Anonymous",
-    time: "1 day ago",
-    text: "God bless you dear",
-  },
-];
+const truncateId = (id) => {
+  if (!id) return 'Unknown';
+  return `${id.slice(0, 6)}...${id.slice(-4)}`;
+};
 
-const CausesDetailsRight = () => {
+const CausesDetailsRight = ({ causeId }) => {
+  const { transactions, loading, error, getTransactions } = useTransactions();
+  const [showAll, setShowAll] = useState(false);
+
+  // Sort transactions by amount
+  const sortedTransactions = useMemo(() => {
+    return [...transactions].sort((a, b) => b.amount - a.amount);
+  }, [transactions]);
+
+  // Get either top 3 or all transactions based on showAll state
+  const displayedTransactions = useMemo(() => {
+    return showAll ? sortedTransactions : sortedTransactions.slice(0, 3);
+  }, [sortedTransactions, showAll]);
+
+  useEffect(() => {
+    console.log('Fetching transactions for recipient:', causeId);
+    
+    getTransactions({
+      signerPublicKey: "",
+      recipientPublicKey: "CAvCqZP5xqk7E9baKSvAoFZazYYjNbgrgtnDicVMb25i",
+    });
+  }, [getTransactions]);
+
   return (
     <div className="causes-details__right">
       <div className="causes-details__organizer">
@@ -59,27 +52,56 @@ const CausesDetailsRight = () => {
           </ul>
         </div>
       </div>
+
       <div className="causes-details__donations">
         <h3 className="causes-details__donations-title">Recent Donations</h3>
-        <ul className="list-unstyled causes-details__donations-list">
-          {donations.map(({ id, amount, image, name, text, time }) => (
-            <li key={id}>
-              <div className="causes-details__donations-img">
-                <Image
-                  src={require(`@/images/resources/${image}`).default.src}
-                  alt=""
-                />
+        
+        {loading && (
+          <div className="text-center py-4">
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        )}
+
+        {error && (
+          <div className="alert alert-danger" role="alert">
+            Error loading donations: {error}
+          </div>
+        )}
+
+        {!loading && !error && (
+          <>
+            <ul className="list-unstyled causes-details__donations-list">
+              {displayedTransactions.map((transaction) => (
+                <li key={transaction.id}>
+                  <div className="causes-details__donations-content">
+                    <h4>${transaction.amount}</h4>
+                    <p>ID: {truncateId(transaction.id)}</p>
+                  </div>
+                </li>
+              ))}
+
+              {transactions.length === 0 && (
+                <li className="text-center py-4">
+                  <p className="text-muted">No donations yet. Be the first to donate!</p>
+                </li>
+              )}
+            </ul>
+
+            {/* Only show button if there are more than 3 transactions */}
+            {transactions.length > 3 && (
+              <div className="text-center mt-4">
+                <button
+                  className="thm-btn"
+                  onClick={() => setShowAll(!showAll)}
+                >
+                  {showAll ? 'Show Less' : 'View All'}
+                </button>
               </div>
-              <div className="causes-details__donations-content">
-                <h4>${amount}</h4>
-                <h5>
-                  {name} <span>{time}</span>
-                </h5>
-                <p>{text}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+            )}
+          </>
+        )}
       </div>
     </div>
   );

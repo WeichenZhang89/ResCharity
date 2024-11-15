@@ -16,7 +16,7 @@ const Home = () => {
     <Layout pageTitle="Home">
       <MainSlider />
       <Charity />
-      {/* <CausesOne />
+      <CausesOne />
       <JoinOne />
       <ThreeBoxes />
       <HelpingOne />
@@ -24,7 +24,7 @@ const Home = () => {
       <TestimonialOne />
       <HelpThem />
       <NewsOne />
-      <BrandOne /> */}
+      <BrandOne />
     </Layout>
   );
 };
