@@ -16,15 +16,15 @@ const Home = () => {
     <Layout pageTitle="Home">
       <MainSlider />
       <Charity />
-      <CausesOne />
-      <JoinOne />
-      <ThreeBoxes />
-      <HelpingOne />
-      <GalleryOne />
-      <TestimonialOne />
-      <HelpThem />
-      <NewsOne />
-      <BrandOne />
+      {/*<CausesOne />*/}
+      {/*<JoinOne />*/}
+      {/*<ThreeBoxes />*/}
+      {/*<HelpingOne />*/}
+      {/*<GalleryOne />*/}
+      {/*<TestimonialOne />*/}
+      {/*<HelpThem />*/}
+      {/*<NewsOne />*/}
+      {/*<BrandOne />*/}
     </Layout>
   );
 };
