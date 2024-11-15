@@ -4,7 +4,7 @@ import { contact } from "./contactData";
 
 const footerData = {
   ...contact,
-  link: "Halpes",
+  link: "ResCharity",
   copyrightYear: new Date().getFullYear(),
   about:
     "ResCharity is a secure, blockchain-based platform for transparent charity donations, powered by ResVault from ResilientDB. ",
@@ -14,71 +14,71 @@ const footerData = {
     {
       id: 1,
       href: "#",
-      icon: "fa-twitter"
+      icon: "fa-twitter",
     },
     {
       id: 2,
       href: "#",
-      icon: "fa-facebook-square"
+      icon: "fa-facebook-square",
     },
     {
       id: 3,
       href: "#",
-      icon: "fa-dribbble"
+      icon: "fa-dribbble",
     },
     {
       id: 4,
       href: "#",
-      icon: "fa-instagram"
-    }
+      icon: "fa-instagram",
+    },
   ],
   exploreList: [
     {
       id: 1,
       href: "#",
-      title: "Donate"
+      title: "Donate",
     },
     {
       id: 2,
       href: "#",
-      title: "Campaigns"
+      title: "Campaigns",
     },
     {
       id: 3,
       href: "#",
-      title: "Fundraise"
+      title: "Fundraise",
     },
     {
       id: 4,
       href: "#",
-      title: "Volunteers"
+      title: "Volunteers",
     },
     {
       id: 5,
       href: "#",
-      title: "Sponsors"
+      title: "Sponsors",
     },
     {
       id: 6,
       href: "#",
-      title: "Fundraising"
+      title: "Fundraising",
     },
     {
       id: 7,
       href: "#",
-      title: "Contact"
+      title: "Contact",
     },
     {
       id: 8,
       href: "#",
-      title: "Help"
+      title: "Help",
     },
     {
       id: 9,
       href: "#",
-      title: "Faqs"
-    }
-  ]
+      title: "Faqs",
+    },
+  ],
 };
 
 export default footerData;
