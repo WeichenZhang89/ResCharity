@@ -15,6 +15,17 @@ const TransactionForm = ({ onLogout, token }) => {
     sdkRef.current = new ResVaultSDK();
   }
 
+  const handleIncrement = () => {
+    setAmount((prev) => String(Number(prev) + 1));
+  };
+
+  const handleDecrement = () => {
+    setAmount((prev) => {
+      const newAmount = Number(prev) - 1;
+      return String(newAmount > 0 ? newAmount : 0);
+    });
+  };
+
   useEffect(() => {
     const sdk = sdkRef.current;
     if (!sdk) return;
@@ -83,6 +94,18 @@ const TransactionForm = ({ onLogout, token }) => {
 
   const handleCloseModal = () => setShowModal(false);
 
+  const handleSliderChange = (e) => {
+    setAmount(e.target.value);
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    // Only allow numbers
+    if (/^\d*$/.test(value)) {
+      setAmount(value);
+    }
+  };
+
   return (
     <>
       <div className="page-container">
@@ -100,13 +123,23 @@ const TransactionForm = ({ onLogout, token }) => {
 
           <form onSubmit={handleSubmit}>
             <div className="form-group mb-3">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Enter your amount here"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              />
+              <div className="amount-input-container">
+                <input
+                  type="text"
+                  className="amount-input"
+                  value={amount}
+                  onChange={handleInputChange}
+                  placeholder="Enter amount"
+                />
+                <input
+                  type="range"
+                  min="0"
+                  max="1000"
+                  value={amount || 0}
+                  className="amount-slider"
+                  onChange={handleSliderChange}
+                />
+              </div>
             </div>
 
             <div className="form-group mb-4">
