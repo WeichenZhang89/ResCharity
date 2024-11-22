@@ -1,9 +1,22 @@
 import { useCausesDetails } from "@/data/causesDetails";
 import { social } from "@/data/NavItems";
 import download from "@/images/resources/causes-details-download-icon.png";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const Login = dynamic(() => import("./Login"), {
+  ssr: false,
+});
+
+const TransactionForm = dynamic(() => import("./TransactionForm"), {
+  ssr: false,
+});
+
+const Loader = dynamic(() => import("./Loader"), {
+  ssr: false,
+});
 
 const CausesDetailsLeft = () => {
   const {
@@ -26,11 +39,35 @@ const CausesDetailsLeft = () => {
   console.log('Calculated percent:', percent);
 
   const [showDonationModal, setShowDonationModal] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [token, setToken] = useState(null);
+  const [isLoadingAfterLogin, setIsLoadingAfterLogin] = useState(false);
 
-  const handleDonateClick = (e) => {
-    e.preventDefault();
-    setShowDonationModal(true);
+  useEffect(() => {
+    const storedToken = sessionStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  const handleLogin = (authToken) => {
+    setIsLoadingAfterLogin(true);
+    setToken(authToken);
+    sessionStorage.setItem("token", authToken);
+
+    setTimeout(() => {
+      setIsAuthenticated(true);
+      setIsLoadingAfterLogin(false);
+    }, 2000);
   };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setToken(null);
+    sessionStorage.removeItem("token");
+  };
+
   const cause = {
     id: "cause-1",
     name: title,
@@ -77,13 +114,34 @@ const CausesDetailsLeft = () => {
       </div>
       <div className="causes-details__share">
         <div className="causes-details__share-btn-box">
-          <Link href="/donate">
-            <a className="causes-details__share-btn thm-btn">
-              <i className="fas fa-arrow-circle-right"></i>Donate Us Now
-            </a>
-          </Link>
+          <button
+            className="causes-details__share-btn thm-btn"
+            onClick={() => setShowDonationModal(true)}
+          >
+            <i className="fas fa-arrow-circle-right"></i>Donate Us Now
+          </button>
         </div>
       </div>
+
+      {showDonationModal && (
+        <div className="donation-modal">
+          <div className="donation-modal-content">
+            <button 
+              className="modal-close-btn"
+              onClick={() => setShowDonationModal(false)}
+            >
+              ×
+            </button>
+            {isLoadingAfterLogin ? (
+              <Loader />
+            ) : isAuthenticated ? (
+              <TransactionForm onLogout={handleLogout} token={token} />
+            ) : (
+              <Login onLogin={handleLogin} />
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

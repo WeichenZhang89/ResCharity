@@ -78,7 +78,7 @@ const Login = ({ onLogin }) => {
       ) {
         setModalTitle("Authentication Failed");
         setModalMessage(
-          "Please connect ResVault to this ResilientApp and try again."
+          "Please connect ResVault to ResCharity and try again."
         );
         setShowModal(true);
       }
@@ -110,7 +110,7 @@ const Login = ({ onLogin }) => {
     <>
       <div className="page-container">
         <div className="form-container">
-          <h2 className="heading">Resilient App</h2>
+          <h2 className="heading">ResCharity</h2>
 
           <div ref={animationContainer} className="animation-container"></div>
 
