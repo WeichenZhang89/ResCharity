@@ -1,25 +1,30 @@
-import causesDetails from "@/data/causesDetails";
+import { useCausesDetails } from "@/data/causesDetails";
 import { social } from "@/data/NavItems";
 import download from "@/images/resources/causes-details-download-icon.png";
 import React, { useState } from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import Link from "next/link";
-const {
-  comments,
-  summaryList,
-  raised,
-  goal,
-  category,
-  title,
-  images,
-  texts,
-  summaryText,
-} = causesDetails;
 
 const CausesDetailsLeft = () => {
+  const {
+    comments,
+    summaryList,
+    raised,
+    goal,
+    category,
+    title,
+    images,
+    texts,
+    summaryText,
+  } = useCausesDetails();
+
+  console.log('CausesDetailsLeft - Raised Amount:', raised);
+
   const raisedNumber = +raised.split(",").join("");
   const goalNumber = +goal.split(",").join("");
   const percent = Math.round((raisedNumber / goalNumber) * 100) + "%";
+  console.log('Calculated percent:', percent);
+
   const [showDonationModal, setShowDonationModal] = useState(false);
 
   const handleDonateClick = (e) => {
@@ -28,7 +33,7 @@ const CausesDetailsLeft = () => {
   };
   const cause = {
     id: "cause-1",
-    name: title, // Using the existing title from causesDetails data
+    name: title,
   };
 
   return (
@@ -70,36 +75,6 @@ const CausesDetailsLeft = () => {
           </p>
         ))}
       </div>
-      {/* <div className="causes-details__images-box">
-        <Row>
-          {images.slice(1).map((image, index) => (
-            <Col xl={6} lg={6} key={index}>
-              <div className="causes-details__images-single">
-                <Image src={image.src} alt="" />
-              </div>
-            </Col>
-          ))}
-        </Row>
-      </div> */}
-      {/* <div className="causes-details__summary">
-        <div className="causes-details__summary-text">
-          <p>{summaryText}</p>
-        </div>
-        <div className="causes-details__summary-list">
-          <ul className="causes-details__summary-list-box list-unstyled">
-            {summaryList.map((item, index) => (
-              <li key={index}>
-                <div className="icon">
-                  <i className="fas fa-arrow-circle-right"></i>
-                </div>
-                <div className="text">
-                  <p>{item}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div> */}
       <div className="causes-details__share">
         <div className="causes-details__share-btn-box">
           <Link href="/donate">
@@ -109,28 +84,6 @@ const CausesDetailsLeft = () => {
           </Link>
         </div>
       </div>
-      {/* <div className="causes-details__download">
-        <div className="causes-details__left">
-          <div className="icon">
-            <Image src={download.src} alt="" />
-          </div>
-          <div className="text">
-            <h4>Our Presentation</h4>
-          </div>
-        </div>
-        <div className="causes-details__download-btn-box">
-          <a href="#" className="causes-details__download-btn thm-btn">
-            <i className="fas fa-arrow-circle-right"></i>Download Now
-          </a>
-        </div>
-      </div> */}
-      {/* <div className="comment-one">
-        <h3 className="comment-one__title">Comments</h3>
-        {comments.map((comment) => (
-          <SingleComment key={comment.id} comment={comment} />
-        ))}
-      </div>
-      <CommentForm /> */}
     </div>
   );
 };

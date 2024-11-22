@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Image } from "react-bootstrap";
+import { useDonations } from "@/context/DonationContext";
 import organizer from "@/images/resources/causes-details-organizar-img-1.jpg";
 
 const CausesDetailsRight = () => {
   const [transactions, setTransactions] = useState([]);
   const [showAll, setShowAll] = useState(false);
+  const { setTotalDonations } = useDonations();
 
   const truncateString = (str, start = 6, end = 4) => {
     if (!str) return '';
@@ -14,36 +16,40 @@ const CausesDetailsRight = () => {
 
   const fetchTransactions = async () => {
     try {
-      console.log('Fetching transactions at:', new Date().toISOString());
       const response = await fetch('/api/transactions');
-      console.log('Response status:', response.status);
-      
+      console.log('API Response:', response.ok);
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      console.log('Received transactions:', data.length);
-        console.log('Raw transaction data:', JSON.stringify(data[0], null, 2));
-      console.log('Transaction structure:', {
-        id: data[0]?.transaction?.value?.id,
-        cmd: data[0]?.transaction?.cmd,
-        inputs: data[0]?.transaction?.value?.inputs,
-        outputs: data[0]?.transaction?.value?.outputs,
-        timestamp: data[0]?.transaction?.value?.asset?.data?.timestamp
-      });
+      console.log('Fetched Transactions:', data);
 
       const sortedData = data.sort((a, b) => {
         const amountA = parseInt(a.transaction.value.outputs[0].amount);
         const amountB = parseInt(b.transaction.value.outputs[0].amount);
         return amountB - amountA;
       });
+      console.log('Sorted Transactions:', sortedData);
+
+      // Calculate total donations
+      const total = sortedData.reduce((sum, tx) => {
+        const amount = parseInt(tx.transaction.value.outputs[0].amount);
+        console.log('Current amount:', amount, 'Running sum:', sum);
+        return sum + amount;
+      }, 0);
+
+      console.log('Total Donations:', total);
+      
       setTransactions(sortedData);
+      setTotalDonations(total);
     } catch (err) {
       console.error('Fetch error:', err);
     }
   };
 
   useEffect(() => {
+    console.log('Fetching transactions...');
     fetchTransactions();
   }, []);
 

@@ -12,11 +12,16 @@ import "@/styles/globals.css";
 import "@/styles/halpes.css";
 import "@/styles/halpes-responsive.css";
 
+import { DonationProvider } from "@/context/DonationContext";
+
 const MyApp = ({ Component, pageProps }) => {
+  console.log('App rendering with DonationProvider');
   return (
-    <ContextProvider>
-      <Component {...pageProps} />
-    </ContextProvider>
+    <DonationProvider>
+      <ContextProvider>
+        <Component {...pageProps} />
+      </ContextProvider>
+    </DonationProvider>
   );
 };
 
