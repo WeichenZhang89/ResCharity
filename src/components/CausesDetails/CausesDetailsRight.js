@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Image } from "react-bootstrap";
-import { useDonations } from "@/context/DonationContext";
 import organizer from "@/images/resources/causes-details-organizar-img-1.jpg";
+import { useDonations } from "@/context/DonationContext";
 
 const CausesDetailsRight = () => {
   const [transactions, setTransactions] = useState([]);
@@ -17,39 +17,33 @@ const CausesDetailsRight = () => {
   const fetchTransactions = async () => {
     try {
       const response = await fetch('/api/transactions');
-      console.log('API Response:', response.ok);
-
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      console.log('Fetched Transactions:', data);
+      console.log('Number of transactions found:', data.length);
 
       const sortedData = data.sort((a, b) => {
         const amountA = parseInt(a.transaction.value.outputs[0].amount);
         const amountB = parseInt(b.transaction.value.outputs[0].amount);
         return amountB - amountA;
       });
-      console.log('Sorted Transactions:', sortedData);
 
       // Calculate total donations
       const total = sortedData.reduce((sum, tx) => {
         const amount = parseInt(tx.transaction.value.outputs[0].amount);
-        console.log('Current amount:', amount, 'Running sum:', sum);
         return sum + amount;
       }, 0);
 
-      console.log('Total Donations:', total);
-      
+      console.log('Total donations calculated:', total);
       setTransactions(sortedData);
-      setTotalDonations(total);
+      setTotalDonations(total); // Update the context with total
     } catch (err) {
       console.error('Fetch error:', err);
     }
   };
 
   useEffect(() => {
-    console.log('Fetching transactions...');
     fetchTransactions();
   }, []);
 
