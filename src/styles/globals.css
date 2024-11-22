@@ -98,26 +98,29 @@ a {
 
 .donation-modal-content {
   background-color: white;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 8px;
   position: relative;
-  width: 90%;
-  max-width: 600px;
-  max-height: 90vh;
+  width: 80%;
+  max-width: 450px;
+  max-height: 80vh;
   overflow-y: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .modal-close-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 8px;
+  right: 8px;
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 20px;
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 4px 8px;
+  color: #666;
 }
 
 .modal-close-btn:hover {
   opacity: 0.7;
+  color: #333;
 }
