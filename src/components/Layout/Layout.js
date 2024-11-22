@@ -8,17 +8,24 @@ import { Link as ScrollLink } from "react-scroll";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import Search from "../Search/Search";
 import SiteFooter from "../SiteFooter/SiteFooter";
+import { useTransactionData } from "@/hooks/useTransactionData";
 
 const Layout = ({ children, pageTitle }) => {
   const [loading, setLoading] = useState(true);
   const { menuStatus } = useRootContext();
   const { scrollTop } = useScroll(70);
+  const { isLoading: transactionsLoading } = useTransactionData();
+
+  console.log('Layout rendering, transactionsLoading:', transactionsLoading);
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  }, []);
+    console.log('Layout effect running, transactionsLoading:', transactionsLoading);
+    if (!transactionsLoading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
+    }
+  }, [transactionsLoading]);
 
   return (
     <>
@@ -28,10 +35,10 @@ const Layout = ({ children, pageTitle }) => {
           {pageTitle} 
         </title>
       </Head>
-      <Preloader loading={loading} />
+      <Preloader loading={loading || transactionsLoading} />
       <main
         id="wrapper"
-        style={{ opacity: loading ? 0 : 1 }}
+        style={{ opacity: loading || transactionsLoading ? 0 : 1 }}
         className="page-wrapper"
       >
         <Header pageTitle={pageTitle} />

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Image } from "react-bootstrap";
 import organizer from "@/images/resources/causes-details-organizar-img-1.jpg";
-import { useDonations } from "@/context/DonationContext";
+import { useTransactionData } from "@/hooks/useTransactionData";
 
 const CausesDetailsRight = () => {
   const [transactions, setTransactions] = useState([]);
   const [showAll, setShowAll] = useState(false);
-  const { setTotalDonations } = useDonations();
+  const { fetchTransactions } = useTransactionData();
 
   const truncateString = (str, start = 6, end = 4) => {
     if (!str) return '';
@@ -23,37 +23,18 @@ const CausesDetailsRight = () => {
     }).format(amount);
   };
 
-  const fetchTransactions = async () => {
-    try {
-      const response = await fetch('/api/transactions');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      console.log('Number of transactions found:', data.length);
-
+  useEffect(() => {
+    const loadTransactions = async () => {
+      const data = await fetchTransactions();
       const sortedData = data.sort((a, b) => {
         const amountA = parseInt(a.transaction.value.outputs[0].amount);
         const amountB = parseInt(b.transaction.value.outputs[0].amount);
         return amountB - amountA;
       });
-
-      // Calculate total donations
-      const total = sortedData.reduce((sum, tx) => {
-        const amount = parseInt(tx.transaction.value.outputs[0].amount);
-        return sum + amount;
-      }, 0);
-
-      console.log('Total donations calculated:', total);
       setTransactions(sortedData);
-      setTotalDonations(total); // Update the context with total
-    } catch (err) {
-      console.error('Fetch error:', err);
-    }
-  };
-
-  useEffect(() => {
-    fetchTransactions();
+    };
+    
+    loadTransactions();
   }, []);
 
   const displayedTransactions = showAll ? transactions : transactions.slice(0, 5);
