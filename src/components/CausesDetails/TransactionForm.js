@@ -42,7 +42,7 @@ const TransactionForm = ({ onLogout, token }) => {
         if (message.data.success) {
           setModalTitle("Success");
           setModalMessage(
-            "Transaction successful! ID: " +
+            "Thank you for your contribution! ID: " +
               message.data.data.postTransaction.id
           );
         } else {
@@ -98,12 +98,26 @@ const TransactionForm = ({ onLogout, token }) => {
     setAmount(e.target.value);
   };
 
+  const formatNumber = (num) => {
+    // Remove any commas first and parse the number
+    const value = num.replace(/,/g, '');
+    if (!value) return '';
+    return Number(value).toLocaleString('en-US');
+  };
+
   const handleInputChange = (e) => {
     const value = e.target.value;
+    // Remove commas for validation and storage
+    const rawValue = value.replace(/,/g, '');
     // Only allow numbers
-    if (/^\d*$/.test(value)) {
-      setAmount(value);
+    if (/^\d*$/.test(rawValue)) {
+      setAmount(rawValue);  // Store raw value without commas
     }
+  };
+
+  // Add this function to format display value
+  const displayAmount = () => {
+    return amount ? formatNumber(amount) : '';
   };
 
   return (
@@ -111,7 +125,7 @@ const TransactionForm = ({ onLogout, token }) => {
       <div className="page-container">
         <div className="form-container">
           <div className="d-flex justify-content-between align-items-center mb-4">
-            <h2 className="heading">Submit Transaction</h2>
+            <h2 className="heading">Make a Contribution</h2>
             <button
               type="button"
               className="btn btn-danger logout-button"
@@ -126,8 +140,8 @@ const TransactionForm = ({ onLogout, token }) => {
               <div className="amount-input-container">
                 <input
                   type="text"
-                  className="amount-input"
-                  value={amount}
+                  className="form-control"
+                  value={displayAmount()}
                   onChange={handleInputChange}
                   placeholder="Enter amount"
                 />
@@ -154,7 +168,7 @@ const TransactionForm = ({ onLogout, token }) => {
 
             <div className="form-group text-center">
               <button type="submit" className="btn btn-primary button">
-                Submit Transaction
+                Donate
               </button>
             </div>
           </form>
