@@ -7447,3 +7447,36 @@ h6 {
   font-family: "Poppins, sans-serif";
   width: 300px;
 }
+
+/* add for the transaction form */
+.amount-input-container {
+  position: relative;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.amount-input {
+  width: 100%;
+  background: #1e1e2d;
+  border: 1px solid #2d2d3a;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-size: 16px;
+  text-align: left; /* 改为左对齐 */
+}
+
+.amount-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.amount-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  height: 4px;
+  background: #2d2d3a;
+  outline: none;
+  border-radius: 2px;
+}
