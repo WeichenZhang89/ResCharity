@@ -42,8 +42,9 @@ const TransactionForm = ({ onLogout, token }) => {
         if (message.data.success) {
           setModalTitle("Success");
           setModalMessage(
-            "Thank you for your contribution! ID: " +
-              message.data.data.postTransaction.id
+            "Thank you for your contribution!\n" +
+            "Transaction ID: " +
+            message.data.data.postTransaction.id
           );
         } else {
           setModalTitle("Transaction Failed");
