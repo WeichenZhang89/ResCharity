@@ -1,16 +1,14 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useCallback } from 'react';
 
 const DonationContext = createContext();
 
 export function DonationProvider({ children }) {
   const [totalDonations, setTotalDonations] = useState(0);
 
-  console.log('DonationContext - Current Total:', totalDonations); // Debug context value
-
-  const updateTotalDonations = (newTotal) => {
-    console.log('Updating total donations to:', newTotal); // Debug updates
+  const updateTotalDonations = useCallback((newTotal) => {
+    console.log('DonationContext: Updating total to', newTotal); // Debug log
     setTotalDonations(newTotal);
-  };
+  }, []);
 
   return (
     <DonationContext.Provider value={{ 
@@ -25,7 +23,7 @@ export function DonationProvider({ children }) {
 export function useDonations() {
   const context = useContext(DonationContext);
   if (!context) {
-    console.error('useDonations must be used within a DonationProvider'); // Debug context usage
+    throw new Error('useDonations must be used within a DonationProvider');
   }
   return context;
 } 
