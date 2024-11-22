@@ -14,6 +14,15 @@ const CausesDetailsRight = () => {
     return `${str.slice(0, start)}...${str.slice(-end)}`;
   };
 
+  const formatAmount = (amount) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
+  };
+
   const fetchTransactions = async () => {
     try {
       const response = await fetch('/api/transactions');
@@ -55,11 +64,12 @@ const CausesDetailsRight = () => {
         <h3>Transactions</h3>
         {displayedTransactions.map((tx, index) => {
           const sender = tx.transaction.value.inputs[0].owners_before[0];
+          const amount = parseInt(tx.transaction.value.outputs[0].amount);
           return (
             <div key={index} className="transaction-item">
               <p><strong>Sender:</strong> {truncateString(sender, 6, 4)}</p>
               <p><strong>Transaction ID:</strong> {truncateString(tx.transaction.value.id, 8, 6)}</p>
-              <p><strong>Amount:</strong> {tx.transaction.value.outputs[0].amount}</p>
+              <p><strong>Amount:</strong> {formatAmount(amount)}</p>
               <hr />
             </div>
           );

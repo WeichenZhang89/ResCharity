@@ -33,9 +33,18 @@ const CausesDetailsLeft = () => {
 
   console.log('CausesDetailsLeft - Raised Amount:', raised);
 
-  const raisedNumber = +raised.split(",").join("");
-  const goalNumber = +goal.split(",").join("");
-  const percent = Math.round((raisedNumber / goalNumber) * 100) + "%";
+  const formatAmount = (amount) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
+  };
+
+  const raisedNumber = +raised.replace(/[^0-9.-]+/g, "");
+  const goalNumber = +goal.replace(/[^0-9.-]+/g, "");
+  const percent = Math.min(Math.round((raisedNumber / goalNumber) * 100), 100) + "%";
   console.log('Calculated percent:', percent);
 
   const [showDonationModal, setShowDonationModal] = useState(false);
@@ -96,10 +105,10 @@ const CausesDetailsLeft = () => {
           </div>
           <div className="causes-details__goals">
             <p>
-              <span>${raised}</span> Raised
+              <span>{formatAmount(raisedNumber)}</span> Raised
             </p>
             <p>
-              <span>${goal}</span> Goal
+              <span>{formatAmount(goalNumber)}</span> Goal
             </p>
           </div>
         </div>

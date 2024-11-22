@@ -12,10 +12,18 @@ const CausesSingle = ({ cause = {}, causePage }) => {
     }
   };
 
-  const { image, category, title, description, raised, goal } = cause;
-  const raisedNumber = +raised.split(",").join("");
-  const goalNumber = +goal.split(",").join("");
-  const percent = Math.round((raisedNumber / goalNumber) * 100);
+  const formatAmount = (amount) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
+  };
+
+  const raisedNumber = +cause.raised.replace(/[^0-9.-]+/g, "");
+  const goalNumber = +cause.goal.replace(/[^0-9.-]+/g, "");
+  const percent = Math.min(Math.round((raisedNumber / goalNumber) * 100), 100);
 
   return (
     <div className={causePage ? "" : "my-4"}>
@@ -26,7 +34,7 @@ const CausesSingle = ({ cause = {}, causePage }) => {
         <div className="causes-one__img">
           <div className="causes-one__img-box">
             <Image
-              src={require(`@/images/resources/${image}`).default.src}
+              src={require(`@/images/resources/${cause.image}`).default.src}
               alt=""
             />
             <Link href="/causes-details">
@@ -36,14 +44,14 @@ const CausesSingle = ({ cause = {}, causePage }) => {
             </Link>
           </div>
           <div className="causes-one__category">
-            <span>{category}</span>
+            <span>{cause.category}</span>
           </div>
         </div>
         <div className="causes-one__content">
           <h3 className="causes-one__title">
-            <Link href="/causes-details">{title}</Link>
+            <Link href="/causes-details">{cause.title}</Link>
           </h3>
-          <p className="causes-one__text">{description}</p>
+          <p className="causes-one__text">{cause.description}</p>
         </div>
         <div className="causes-one__progress">
           <ReactVisibilitySensor
@@ -54,21 +62,19 @@ const CausesSingle = ({ cause = {}, causePage }) => {
             <div className="bar">
               <div
                 className="bar-inner count-bar"
-                data-percent={`${countStart ? percent : 0}%`}
-                style={{ width: `${countStart ? percent : 0}%`, opacity: 1 }}
+                style={{ width: `${percent}%` }}
+                data-percent={`${percent}%`}
               >
-                <div className="count-text" style={{ opacity: 1 }}>
-                  {countStart ? percent : 0}%
-                </div>
+                <div className="count-text">{percent}%</div>
               </div>
             </div>
           </ReactVisibilitySensor>
           <div className="causes-one__goals">
             <p>
-              <span>${raised}</span> Raised
+              <span>{formatAmount(raisedNumber)}</span> Raised
             </p>
             <p>
-              <span>${goal}</span> Goal
+              <span>{formatAmount(goalNumber)}</span> Goal
             </p>
           </div>
         </div>
