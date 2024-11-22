@@ -3,8 +3,6 @@ import ResVaultSDK from "resvault-sdk";
 import NotificationModal from "./NotificationModal";
 import { v4 as uuidv4 } from "uuid";
 import dynamic from "next/dynamic";
-// Import SVG as a component
-import ResVaultLogo from "@/images/resilientdb.svg";
 
 const Login = ({ onLogin }) => {
   const sdkRef = useRef(null);
@@ -122,7 +120,14 @@ const Login = ({ onLogin }) => {
               onClick={handleAuthentication}
             >
               <div className="logoBox">
-                <ResVaultLogo width={24} height={24} />
+                <img 
+                  src="/resilientdb.svg" 
+                  alt="ResVault" 
+                  className="oauth-logo" 
+                  width="24"
+                  height="24"
+                  style={{ objectFit: 'contain' }}
+                />
               </div>
               <span className="oauth-text">ResVault</span>
             </button>
