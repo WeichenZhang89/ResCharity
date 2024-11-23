@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import ResVaultSDK from "resvault-sdk";
 import NotificationModal from "./NotificationModal";
+import { targetPublicKey } from '../../config/targetPublicKey';
 
 const TransactionForm = ({ onLogout, token }) => {
   const [amount, setAmount] = useState("");
-  const [recipient, setRecipient] = useState("");
+  const [recipient, setRecipient] = useState(targetPublicKey);
   const [showModal, setShowModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalMessage, setModalMessage] = useState("");
@@ -160,10 +161,17 @@ const TransactionForm = ({ onLogout, token }) => {
             <div className="form-group mb-4">
               <input
                 type="text"
-                className="form-control"
-                placeholder="Enter recipient address here"
                 value={recipient}
-                onChange={(e) => setRecipient(e.target.value)}
+                className="w-[450px] px-3 py-2 border rounded-md text-gray-500 cursor-not-allowed overflow-hidden"
+                readOnly
+                style={{
+                  textAlign: 'left',
+                  lineHeight: '1.5',
+                  fontSize: '14px',
+                  color: '#6B7280',
+                  caretColor: 'transparent',
+                  userSelect: 'none',
+                }}
               />
             </div>
 

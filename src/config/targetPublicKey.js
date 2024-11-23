@@ -1,0 +1,1 @@
+export const targetPublicKey = "CAvCqZP5xqk7E9baKSvAoFZazYYjNbgrgtnDicVMb25i"; 
