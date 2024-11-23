@@ -1,7 +1,8 @@
+require('dotenv').config();
 const { WebSocketMongoSync } = require('resilient-node-cache');
 
 const mongoConfig = {
-  uri: 'mongodb://localhost:27017',
+  uri: process.env.MONGODB_URI,
   dbName: 'myDatabase',
   collectionName: 'myCollection',
 };
