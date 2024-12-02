@@ -2,6 +2,7 @@
 /node_modules
 /.pnp
 .pnp.js
+package-lock.json
 
 # 测试覆盖率报告
 /coverage
@@ -21,6 +22,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-
+yarn.lock
 
 # Next.js
 /.next/
