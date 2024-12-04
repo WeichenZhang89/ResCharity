@@ -145,6 +145,19 @@ const TransactionForm = ({ onLogout, token }) => {
           </div>
 
           <form onSubmit={handleSubmit}>
+            <div className="form-group mb-4">
+              <input
+                type="text"
+                value={recipient}
+                onChange={handleRecipientChange}
+                className="form-control"
+                style={{
+                  fontSize: "14px",
+                  color: "#666",
+                  background: "#f5f5f5",
+                }}
+              />
+            </div>
             <div className="amount-input-container">
               <input
                 type="text"
@@ -178,20 +191,6 @@ const TransactionForm = ({ onLogout, token }) => {
               <div className="remaining-amount">
                 Remaining Goal: ${formatNumber(remainingAmount)}
               </div>
-            </div>
-
-            <div className="form-group mb-4">
-              <input
-                type="text"
-                value={recipient}
-                onChange={handleRecipientChange}
-                className="form-control"
-                style={{
-                  fontSize: "14px",
-                  color: "#666",
-                  background: "#f5f5f5",
-                }}
-              />
             </div>
 
             <div className="form-group">
