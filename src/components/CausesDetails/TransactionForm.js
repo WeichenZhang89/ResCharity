@@ -13,10 +13,12 @@ const TransactionForm = ({ onLogout, token }) => {
 
   const { remainingAmount } = useDonations();
   const sdkRef = useRef(null);
-
-  const presetAmounts = [20, 50, 100, 150, 200];
+  const presetAmounts = [50, 100, 150, 200];
   const [selectedPreset, setSelectedPreset] = useState(null);
-
+  const handlePresetAmount = (presetAmount) => {
+    setAmount(String(Math.min(presetAmount, remainingAmount)));
+    setSelectedPreset(presetAmount);
+  };
   if (!sdkRef.current) {
     sdkRef.current = new ResVaultSDK();
   }
@@ -52,11 +54,6 @@ const TransactionForm = ({ onLogout, token }) => {
       const numValue = parseInt(value) || 0;
       setAmount(String(Math.min(numValue, remainingAmount)));
     }
-  };
-
-  const handlePresetAmount = (presetAmount) => {
-    setAmount(String(Math.min(presetAmount, remainingAmount)));
-    setSelectedPreset(presetAmount);
   };
 
   useEffect(() => {
@@ -128,6 +125,10 @@ const TransactionForm = ({ onLogout, token }) => {
 
   const handleCloseModal = () => setShowModal(false);
 
+  const handleRecipientChange = (e) => {
+    setRecipient(e.target.value);
+  };
+
   return (
     <>
       <div className="page-container">
@@ -183,8 +184,8 @@ const TransactionForm = ({ onLogout, token }) => {
               <input
                 type="text"
                 value={recipient}
+                onChange={handleRecipientChange}
                 className="form-control"
-                readOnly
                 style={{
                   fontSize: "14px",
                   color: "#666",

@@ -7658,3 +7658,33 @@ h6 {
   background: #15c8a0;
   border-color: #15c8a0;
 }
+
+/* format for donation */
+.preset-amounts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.preset-amount-btn {
+  flex: 1;
+  min-width: 80px;
+  padding: 8px 16px;
+  border: 1px solid #2d2d3a;
+  border-radius: 4px;
+  background: #1e1e2d;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.preset-amount-btn:hover {
+  background: #2d2d3a;
+}
+
+.preset-amount-btn.active {
+  background: #15c8a0;
+  border-color: #15c8a0;
+}
