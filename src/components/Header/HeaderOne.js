@@ -73,9 +73,9 @@ const HeaderOne = () => {
                 ></span>
                 <a href="#" className="main-menu__cart icon-shopping-cart "></a>
                 <div className="main-menu__phone-contact">
-                  <div className="main-menu__phone-icon">
+                  {/* <div className="main-menu__phone-icon">
                     <span className="icon-chat"></span>
-                  </div>
+                  </div> */}
                   {/* <div className="main-menu__phone-number">
                     <p>Call Anytime</p>
                     <a href="tel:92 666 888 0000">92 666 888 0000</a>
