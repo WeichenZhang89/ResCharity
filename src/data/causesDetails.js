@@ -5,23 +5,21 @@ import image from "@/images/resources/causes-details-img.jpg";
 
 const text1 =
   "The Community Cat Kindness Fund has been set up by the Yolo County SPCA to help provide care for community cats including veterinary care and humane euthanasia when needed for medical reasons. Even with discounted services, paying for the veterinary care for community cats is often a hardship on volunteers. This fund will help caring cat lovers to assist community cats in need. All contributors will receive a thank you from the Yolo County SPCA with a tax-deductible receipt.";
-const text2 =
-  "";
+const text2 = "";
 
-const summaryText =
-  "";
+const summaryText = "";
 
 export function useCausesDetails() {
   const { totalDonations } = useDonations();
-  console.log('CausesDetails - Total Donations:', totalDonations); // Debug total in hook
+  console.log("CausesDetails - Total Donations:", totalDonations); // Debug total in hook
 
   // Format the number and ensure it's a string
   const formattedTotal = totalDonations ? totalDonations.toString() : "0";
-  console.log('Formatted Total:', formattedTotal); // Debug formatted value
+  console.log("Formatted Total:", formattedTotal); // Debug formatted value
 
   return {
     raised: formattedTotal,
-    goal: "30000",
+    goal: "300000",
     category: "Animal Welfare",
     title: "Raise Fund for Community Cats",
     images: [image, image2, image3],
@@ -58,7 +56,7 @@ export function useCausesDetails() {
 // Keep the default export for backward compatibility
 export default {
   raised: "0",
-  goal: "30,000",
+  goal: "300,000",
   category: "Animal Welfare",
   title: "Raise Fund for Community Cats",
   images: [image, image2, image3],

@@ -2,7 +2,7 @@ import { useDonations } from "@/context/DonationContext";
 
 export function useCausesPageData() {
   const { totalDonations } = useDonations();
-  console.log('CausesPage - Total Donations:', totalDonations);
+  console.log("CausesPage - Total Donations:", totalDonations);
 
   return [
     {
@@ -13,7 +13,7 @@ export function useCausesPageData() {
       description:
         "The Community Cat Kindness Fund has been set up by the Yolo County SPCA to help provide care for community cats including veterinary care and humane euthanasia when needed for medical reasons. ",
       raised: totalDonations ? totalDonations.toString() : "0",
-      goal: "30000",
+      goal: "300,000",
     },
     {
       id: 2,
@@ -22,7 +22,7 @@ export function useCausesPageData() {
       title: "Our donation is hope for poor childrens",
       description: "Get children food",
       raised: "25,270",
-      goal: "30,000",
+      goal: "300,000",
     },
     {
       id: 3,
@@ -31,7 +31,7 @@ export function useCausesPageData() {
       title: "Education for Poor Children",
       description: "Get children Education",
       raised: "25,270",
-      goal: "30,000",
+      goal: "300,000",
     },
     // {
     //   id: 4,
