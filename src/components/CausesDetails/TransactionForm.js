@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import ResVaultSDK from "resvault-sdk";
 import NotificationModal from "./NotificationModal";
-import { targetPublicKey } from '../../config/targetPublicKey';
+import { targetPublicKey } from "../../config/targetPublicKey";
+import { useDonations } from "@/context/DonationContext";
 
 const TransactionForm = ({ onLogout, token }) => {
   const [amount, setAmount] = useState("");
@@ -10,14 +11,21 @@ const TransactionForm = ({ onLogout, token }) => {
   const [modalTitle, setModalTitle] = useState("");
   const [modalMessage, setModalMessage] = useState("");
 
+  const { remainingAmount } = useDonations();
   const sdkRef = useRef(null);
+
+  const presetAmounts = [20, 50, 100, 150, 200];
+  const [selectedPreset, setSelectedPreset] = useState(null);
 
   if (!sdkRef.current) {
     sdkRef.current = new ResVaultSDK();
   }
 
   const handleIncrement = () => {
-    setAmount((prev) => String(Number(prev) + 1));
+    setAmount((prev) => {
+      const newAmount = Number(prev) + 1;
+      return String(Math.min(newAmount, remainingAmount));
+    });
   };
 
   const handleDecrement = () => {
@@ -25,6 +33,30 @@ const TransactionForm = ({ onLogout, token }) => {
       const newAmount = Number(prev) - 1;
       return String(newAmount > 0 ? newAmount : 0);
     });
+  };
+
+  const handleSliderChange = (e) => {
+    const value = Math.min(parseInt(e.target.value), remainingAmount);
+    setAmount(String(value));
+  };
+
+  const formatNumber = (num) => {
+    const value = num.toString().replace(/,/g, "");
+    if (!value) return "";
+    return Number(value).toLocaleString("en-US");
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value.replace(/,/g, "");
+    if (/^\d*$/.test(value)) {
+      const numValue = parseInt(value) || 0;
+      setAmount(String(Math.min(numValue, remainingAmount)));
+    }
+  };
+
+  const handlePresetAmount = (presetAmount) => {
+    setAmount(String(Math.min(presetAmount, remainingAmount)));
+    setSelectedPreset(presetAmount);
   };
 
   useEffect(() => {
@@ -44,8 +76,8 @@ const TransactionForm = ({ onLogout, token }) => {
           setModalTitle("Success");
           setModalMessage(
             "Thank you for your contribution!\n" +
-            "Transaction ID: " +
-            message.data.data.postTransaction.id
+              "Transaction ID: " +
+              message.data.data.postTransaction.id
           );
         } else {
           setModalTitle("Transaction Failed");
@@ -96,32 +128,6 @@ const TransactionForm = ({ onLogout, token }) => {
 
   const handleCloseModal = () => setShowModal(false);
 
-  const handleSliderChange = (e) => {
-    setAmount(e.target.value);
-  };
-
-  const formatNumber = (num) => {
-    // Remove any commas first and parse the number
-    const value = num.replace(/,/g, '');
-    if (!value) return '';
-    return Number(value).toLocaleString('en-US');
-  };
-
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    // Remove commas for validation and storage
-    const rawValue = value.replace(/,/g, '');
-    // Only allow numbers
-    if (/^\d*$/.test(rawValue)) {
-      setAmount(rawValue);  // Store raw value without commas
-    }
-  };
-
-  // Add this function to format display value
-  const displayAmount = () => {
-    return amount ? formatNumber(amount) : '';
-  };
-
   return (
     <>
       <div className="page-container">
@@ -138,23 +144,38 @@ const TransactionForm = ({ onLogout, token }) => {
           </div>
 
           <form onSubmit={handleSubmit}>
-            <div className="form-group mb-3">
-              <div className="amount-input-container">
-                <input
-                  type="text"
-                  className="form-control"
-                  value={displayAmount()}
-                  onChange={handleInputChange}
-                  placeholder="Enter amount"
-                />
-                <input
-                  type="range"
-                  min="0"
-                  max="1000"
-                  value={amount || 0}
-                  className="amount-slider"
-                  onChange={handleSliderChange}
-                />
+            <div className="amount-input-container">
+              <input
+                type="text"
+                className="form-control"
+                value={formatNumber(amount)}
+                onChange={handleInputChange}
+                placeholder="Enter amount"
+              />
+              <div className="preset-amounts">
+                {presetAmounts.map((presetAmount) => (
+                  <button
+                    key={presetAmount}
+                    type="button"
+                    className={`preset-amount-btn ${
+                      amount === String(presetAmount) ? "active" : ""
+                    }`}
+                    onClick={() => handlePresetAmount(presetAmount)}
+                  >
+                    ${presetAmount}
+                  </button>
+                ))}
+              </div>
+              <input
+                type="range"
+                min="0"
+                max={remainingAmount}
+                value={amount || 0}
+                className="amount-slider"
+                onChange={handleSliderChange}
+              />
+              <div className="remaining-amount">
+                Remaining Goal: ${formatNumber(remainingAmount)}
               </div>
             </div>
 
@@ -162,21 +183,18 @@ const TransactionForm = ({ onLogout, token }) => {
               <input
                 type="text"
                 value={recipient}
-                className="w-[450px] px-3 py-2 border rounded-md text-gray-500 cursor-not-allowed overflow-hidden"
+                className="form-control"
                 readOnly
                 style={{
-                  textAlign: 'left',
-                  lineHeight: '1.5',
-                  fontSize: '14px',
-                  color: '#6B7280',
-                  caretColor: 'transparent',
-                  userSelect: 'none',
+                  fontSize: "14px",
+                  color: "#666",
+                  background: "#f5f5f5",
                 }}
               />
             </div>
 
-            <div className="form-group text-center">
-              <button type="submit" className="btn btn-primary button">
+            <div className="form-group">
+              <button type="submit" className="button">
                 Donate
               </button>
             </div>

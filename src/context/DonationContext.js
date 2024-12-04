@@ -1,29 +1,27 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState } from "react";
 
 const DonationContext = createContext();
 
 export function DonationProvider({ children }) {
   const [totalDonations, setTotalDonations] = useState(0);
+  const GOAL_AMOUNT = 300000; // 目标金额
 
-  const updateTotalDonations = useCallback((newTotal) => {
-    console.log('DonationContext: Updating total to', newTotal); // Debug log
-    setTotalDonations(newTotal);
-  }, []);
+  const remainingAmount = Math.max(0, GOAL_AMOUNT - totalDonations);
 
   return (
-    <DonationContext.Provider value={{ 
-      totalDonations, 
-      setTotalDonations: updateTotalDonations 
-    }}>
+    <DonationContext.Provider
+      value={{
+        totalDonations,
+        setTotalDonations,
+        goalAmount: GOAL_AMOUNT,
+        remainingAmount,
+      }}
+    >
       {children}
     </DonationContext.Provider>
   );
 }
 
 export function useDonations() {
-  const context = useContext(DonationContext);
-  if (!context) {
-    throw new Error('useDonations must be used within a DonationProvider');
-  }
-  return context;
-} 
+  return useContext(DonationContext);
+}
