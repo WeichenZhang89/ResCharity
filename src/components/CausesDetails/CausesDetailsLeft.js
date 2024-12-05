@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import DonationChart from "./DonationChart";
 
 const Login = dynamic(() => import("./Login"), {
   ssr: false,
@@ -120,6 +121,10 @@ const CausesDetailsLeft = () => {
             {text}
           </p>
         ))}
+      </div>
+      <div className="causes-details__chart-box">
+        <h3>Donation Progress Over Time</h3>
+        <DonationChart />
       </div>
       <div className="causes-details__share">
         <div className="causes-details__share-btn-box">
