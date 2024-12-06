@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import ResVaultSDK from "resvault-sdk";
 import NotificationModal from "./NotificationModal";
 import { useDonations } from "@/context/DonationContext";
+import { Modal, Button } from "react-bootstrap";
 
-const TransactionForm = ({ onLogout, token, targetPublicKey }) => {
+const TransactionForm = ({ onLogout, token, targetPublicKey, onTransactionSuccess }) => {
   const [amount, setAmount] = useState("");
   const [recipient, setRecipient] = useState(targetPublicKey);
   const [showModal, setShowModal] = useState(false);
@@ -138,7 +139,10 @@ const TransactionForm = ({ onLogout, token, targetPublicKey }) => {
     onLogout();
   };
 
-  const handleCloseModal = () => setShowModal(false);
+  const handleCloseModal = () => {
+    setShowModal(false);
+    window.location.reload();
+  };
 
   const handleRecipientChange = (e) => {
     setRecipient(e.target.value);
@@ -150,6 +154,10 @@ const TransactionForm = ({ onLogout, token, targetPublicKey }) => {
     setModalTitle("Monthly Donation");
     setModalMessage("Monthly donation feature coming soon!");
     setShowModal(true);
+  };
+
+  const handleDownloadReceipt = () => {
+    // Implement receipt download logic
   };
 
   return (
@@ -220,13 +228,70 @@ const TransactionForm = ({ onLogout, token, targetPublicKey }) => {
         </div>
       </div>
 
-      <NotificationModal
-        show={showModal}
-        title={modalTitle}
-        message={modalMessage}
-        onClose={handleCloseModal}
-        transactionData={transactionData}
-      />
+      <Modal 
+        show={showModal} 
+        onHide={handleCloseModal}
+        className="custom-modal"
+        centered
+      >
+        <div className="modal-content" style={{ borderRadius: '8px', padding: '24px', background: '#1f2937', color: 'white' }}>
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <h4 className="m-0">{modalTitle}</h4>
+            <button 
+              type="button" 
+              className="btn-close" 
+              onClick={handleCloseModal}
+              style={{ background: 'none', border: 'none', color: 'white' }}
+            >
+              <i className="fas fa-times"></i>
+            </button>
+          </div>
+          
+          {modalTitle === "Success" && (
+            <>
+              <div className="text-center mb-4">
+                <i className="fas fa-check-circle text-success" style={{ fontSize: '2rem', color: '#15c8a0' }}></i>
+                <p className="mt-3">Thank you for your contribution!</p>
+                <p className="text-muted small mb-2">Transaction ID:</p>
+                <p className="small" style={{ wordBreak: 'break-all' }}>
+                  {transactionData?.transactionId}
+                </p>
+              </div>
+              <div className="d-flex gap-2 justify-content-end">
+                <Button 
+                  variant="secondary"
+                  onClick={handleDownloadReceipt}
+                  style={{ background: '#6c757d', border: 'none' }}
+                >
+                  Download Receipt
+                </Button>
+                <Button 
+                  variant="primary"
+                  onClick={handleCloseModal}
+                  style={{ background: '#15c8a0', border: 'none' }}
+                >
+                  OK
+                </Button>
+              </div>
+            </>
+          )}
+          
+          {modalTitle !== "Success" && (
+            <>
+              <p>{modalMessage}</p>
+              <div className="d-flex justify-content-end">
+                <Button 
+                  variant="primary" 
+                  onClick={handleCloseModal}
+                  style={{ background: '#15c8a0', border: 'none' }}
+                >
+                  OK
+                </Button>
+              </div>
+            </>
+          )}
+        </div>
+      </Modal>
     </>
   );
 };

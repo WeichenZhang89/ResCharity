@@ -5,17 +5,17 @@ import CausesDetailsRight from "./CausesDetailsRight";
 import { useCausesDetails } from "@/data/causesDetails";
 
 const CausesDetailsPage = () => {
-  const causesDetails = useCausesDetails();
+  const cause = useCausesDetails();
 
   return (
     <section className="causes-details">
       <Container>
         <Row>
           <Col xl={8} lg={7}>
-            <CausesDetailsLeft />
+            <CausesDetailsLeft cause={cause} />
           </Col>
           <Col xl={4} lg={5}>
-            <CausesDetailsRight />
+            <CausesDetailsRight cause={cause} />
           </Col>
         </Row>
       </Container>
