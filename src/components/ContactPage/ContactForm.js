@@ -8,7 +8,7 @@ const ContactForm = () => {
   if (state.succeeded) {
     return (
       <div className="contact-page__form">
-        <h3 className="text-center">
+        <h3 className="text-center text-white">
           Thank you for your message! We'll get back to you soon.
         </h3>
       </div>
