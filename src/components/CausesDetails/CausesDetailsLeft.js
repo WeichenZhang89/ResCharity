@@ -147,7 +147,11 @@ const CausesDetailsLeft = ({ cause }) => {
             {isLoadingAfterLogin ? (
               <Loader />
             ) : isAuthenticated ? (
-              <TransactionForm onLogout={handleLogout} token={token} />
+              <TransactionForm 
+                onLogout={handleLogout} 
+                token={token} 
+                targetPublicKey={cause.targetPublicKey}
+              />
             ) : (
               <Login onLogin={handleLogin} />
             )}
