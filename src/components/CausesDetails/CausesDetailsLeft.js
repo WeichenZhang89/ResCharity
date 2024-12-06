@@ -18,35 +18,7 @@ const Loader = dynamic(() => import("./Loader"), {
   ssr: false,
 });
 
-const CausesDetailsLeft = () => {
-  const {
-    comments,
-    summaryList,
-    raised,
-    goal,
-    category,
-    title,
-    images,
-    texts,
-    summaryText,
-  } = useCausesDetails();
-
-  console.log('CausesDetailsLeft - Raised Amount:', raised);
-
-  const formatAmount = (amount) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  const raisedNumber = +raised.replace(/[^0-9.-]+/g, "");
-  const goalNumber = +goal.replace(/[^0-9.-]+/g, "");
-  const percent = Math.min(Math.round((raisedNumber / goalNumber) * 100), 100) + "%";
-  console.log('Calculated percent:', percent);
-
+const CausesDetailsLeft = ({ cause }) => {
   const [showDonationModal, setShowDonationModal] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState(null);
@@ -77,18 +49,29 @@ const CausesDetailsLeft = () => {
     sessionStorage.removeItem("token");
   };
 
-  const cause = {
-    id: "cause-1",
-    name: title,
+  const formatAmount = (amount) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
   };
+
+  const raisedNumber = +cause.raised.replace(/[^0-9.-]+/g, "");
+  const goalNumber = +cause.goal.replace(/[^0-9.-]+/g, "");
+  const percent = Math.min(Math.round((raisedNumber / goalNumber) * 100), 100) + "%";
 
   return (
     <div className="causes-details__left-bar">
       <div className="causes-details__img">
         <div className="causes-details__img-box">
-          <Image src={images[0].src} alt="" />
+          <Image 
+            src={require(`@/images/resources/${cause.image}`).default.src}
+            alt={cause.title} 
+          />
           <div className="causes-details__category">
-            <span>{category}</span>
+            <span>{cause.category}</span>
           </div>
         </div>
         <div className="causes-details__progress">
@@ -114,12 +97,10 @@ const CausesDetailsLeft = () => {
         </div>
       </div>
       <div className="causes-details__text-box">
-        <h3>{title}</h3>
-        {texts.map((text, index) => (
-          <p key={index} className={`causes-details__text-${index + 1}`}>
-            {text}
-          </p>
-        ))}
+        <h3>{cause.title}</h3>
+        <p className="causes-details__text-1">
+          {cause.description}
+        </p>
       </div>
       <div className="causes-details__share">
         <div className="causes-details__share-btn-box">

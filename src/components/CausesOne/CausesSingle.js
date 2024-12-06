@@ -37,7 +37,7 @@ const CausesSingle = ({ cause = {}, causePage }) => {
               src={require(`@/images/resources/${cause.image}`).default.src}
               alt=""
             />
-            <Link href="/causes-details">
+            <Link href={`/causes-details/${cause.id}`}>
               <a>
                 <i className="fa fa-plus"></i>
               </a>
@@ -49,9 +49,8 @@ const CausesSingle = ({ cause = {}, causePage }) => {
         </div>
         <div className="causes-one__content">
           <h3 className="causes-one__title">
-            <Link href="/causes-details">{cause.title}</Link>
+            <Link href={`/causes-details/${cause.id}`}>{cause.title}</Link>
           </h3>
-          <p className="causes-one__text">{cause.description}</p>
         </div>
         <div className="causes-one__progress">
           <ReactVisibilitySensor

@@ -7,13 +7,14 @@ export function useCausesPageData() {
   return [
     {
       id: 1,
-      image: "causes_page_img_1.png",
+      image: "causes-details-img-1.jpg",
       category: "Animal Welfare",
       title: "Yolo County SPCA Community Cat Kindness Fund",
       description:
-        "The Community Cat Kindness Fund has been set up by the Yolo County SPCA to help provide care for community cats including veterinary care and humane euthanasia when needed for medical reasons. ",
+        "The Community Cat Kindness Fund has been set up by the Yolo County SPCA to help provide care for community cats including veterinary care and humane euthanasia when needed for medical reasons. Even with discounted services, paying for the veterinary care for community cats is often a hardship on volunteers. This fund will help caring cat lovers to assist community cats in need. All contributors will receive a thank you from the Yolo County SPCA with a tax-deductible receipt. ",
       raised: totalDonations ? totalDonations.toString() : "0",
       goal: "30000",
+      targetPublicKey: "8QJSU7bjkFJAVZKqkHqQzqzQwxqj2fqj6KGCZtQLZxxx"
     },
     {
       id: 2,
@@ -23,6 +24,7 @@ export function useCausesPageData() {
       description: "Get children food",
       raised: "25,270",
       goal: "30,000",
+      targetPublicKey: "2sSeBbvCLfHMNKgJr1MzQaaDTxoYES2UZpFxNQt8xHXJ"
     },
     {
       id: 3,
@@ -32,6 +34,7 @@ export function useCausesPageData() {
       description: "Get children Education",
       raised: "25,270",
       goal: "30,000",
+      targetPublicKey: "G1paLjaCpjbeAQCtbsSrXcFtYWwiSzYVRU8o96cBru8h"
     },
     // {
     //   id: 4,

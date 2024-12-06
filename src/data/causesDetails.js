@@ -1,7 +1,7 @@
 import { useDonations } from "@/context/DonationContext";
 import image2 from "@/images/resources/causes-details-images-1.jpg";
 import image3 from "@/images/resources/causes-details-images-2.jpg";
-import image from "@/images/resources/causes-details-img.jpg";
+import image from "@/images/resources/causes-details-img-1.jpg";
 
 const text1 =
   "The Community Cat Kindness Fund has been set up by the Yolo County SPCA to help provide care for community cats including veterinary care and humane euthanasia when needed for medical reasons. Even with discounted services, paying for the veterinary care for community cats is often a hardship on volunteers. This fund will help caring cat lovers to assist community cats in need. All contributors will receive a thank you from the Yolo County SPCA with a tax-deductible receipt.";
