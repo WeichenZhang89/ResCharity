@@ -7869,3 +7869,110 @@ h6 {
   background: #15c8a0;
   color: white;
 }
+
+.features-section {
+  padding: 60px 0;
+  background-color: #f8f9fa;
+}
+
+.features-section h2 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--thm-black);
+  text-align: center;
+  margin-bottom: 50px;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.features-section h2 .title-underline {
+  width: 80px;
+  height: 4px;
+  background-color: var(--thm-primary);
+  margin: 15px auto 0;
+  border-radius: 2px;
+}
+
+.features-section .row {
+  justify-content: center;
+  gap: 30px;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  height: 100%;
+  padding: 40px 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  max-width: 350px;
+  margin: 0 auto;
+}
+
+.features-section {
+  padding: 60px 0;
+  background-color: #f8f9fa;
+}
+
+.features-section h2 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--thm-black);
+  text-align: center;
+  margin-bottom: 50px;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.features-section h2 .title-underline {
+  width: 80px;
+  height: 4px;
+  background-color: var(--thm-primary);
+  margin: 15px auto 0;
+  border-radius: 2px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 三列 */
+  grid-template-rows: repeat(2, auto);    /* 两行 */
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  height: 100%;
+  padding: 40px 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* 响应式布局 */
+@media (max-width: 992px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .features-section h2 {
+    font-size: 2.5rem;
+  }
+}
