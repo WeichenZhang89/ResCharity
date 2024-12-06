@@ -7710,3 +7710,8 @@ h6 {
   position: relative;
   margin: 0 auto;
 }
+
+.contact-page .section-title__title,
+.contact-page .section-title__tagline {
+  color: #ffffff;
+}
