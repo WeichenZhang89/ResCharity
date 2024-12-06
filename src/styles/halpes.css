@@ -7768,3 +7768,20 @@ h6 {
   margin-right: 8px;
   font-size: 14px;
 }
+
+/* donation form shrink */
+.form-control {
+  min-height: 36px; /* 减小输入框高度 */
+}
+
+.preset-amount-btn {
+  font-size: 0.875rem; /* 稍微减小按钮文字大小 */
+}
+
+.button {
+  padding: 0.375rem 0.75rem; /* 减小按钮内边距 */
+}
+
+.form-container {
+  padding: 1rem; /* 减小容器内边距 */
+}

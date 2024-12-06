@@ -76,14 +76,14 @@ const TransactionForm = ({ onLogout, token }) => {
             amount: formatNumber(amount),
             recipient: recipient,
             date: new Date().toLocaleString(),
-            status: 'Success'
+            status: "Success",
           };
-          
+
           setModalTitle("Success");
           setModalMessage(
             "Thank you for your contribution!\n" +
-            "Transaction ID:\n" +
-            receiptData.transactionId
+              "Transaction ID:\n" +
+              receiptData.transactionId
           );
           setTransactionData(receiptData);
         } else {
@@ -139,6 +139,14 @@ const TransactionForm = ({ onLogout, token }) => {
     setRecipient(e.target.value);
   };
 
+  const handleMonthlyDonate = (e) => {
+    e.preventDefault();
+    // TODO: Implement monthly donation logic
+    setModalTitle("Monthly Donation");
+    setModalMessage("Monthly donation feature coming soon!");
+    setShowModal(true);
+  };
+
   return (
     <>
       <div className="page-container">
@@ -155,7 +163,7 @@ const TransactionForm = ({ onLogout, token }) => {
           </div>
 
           <form onSubmit={handleSubmit}>
-            <div className="form-group mb-4">
+            <div className="form-group mb-1">
               <input
                 type="text"
                 value={recipient}
@@ -168,7 +176,7 @@ const TransactionForm = ({ onLogout, token }) => {
                 }}
               />
             </div>
-            <div className="amount-input-container">
+            <div className="amount-input-container mb-1">
               <input
                 type="text"
                 className="form-control"
@@ -198,14 +206,21 @@ const TransactionForm = ({ onLogout, token }) => {
                 className="amount-slider"
                 onChange={handleSliderChange}
               />
-              <div className="remaining-amount">
+              <div className="remaining-amount mb-1">
                 Remaining Goal: ${formatNumber(remainingAmount)}
               </div>
             </div>
 
-            <div className="form-group">
-              <button type="submit" className="button">
-                Donate
+            <div className="form-group d-flex gap-3">
+              <button type="submit" className="button flex-grow-1">
+                Donate Once
+              </button>
+              <button
+                type="button"
+                className="button flex-grow-1"
+                onClick={handleMonthlyDonate}
+              >
+                Donate Monthly
               </button>
             </div>
           </form>
