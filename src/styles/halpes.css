@@ -7785,3 +7785,87 @@ h6 {
 .form-container {
   padding: 1rem; /* 减小容器内边距 */
 }
+/* style*/
+.form-container {
+  max-width: 480px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.preset-amounts-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.preset-btn {
+  padding: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: white;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.preset-btn.active {
+  background: #15c8a0;
+  color: white;
+  border-color: #15c8a0;
+}
+
+.amount-input-wrapper {
+  position: relative;
+}
+
+.amount-input {
+  height: 48px;
+  font-size: 24px;
+  font-weight: 500;
+  padding-right: 60px;
+}
+
+.currency-label {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.guarantee-box {
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.guarantee-text {
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.public-key-text {
+  word-break: break-all;
+  font-size: 12px;
+}
+
+.btn {
+  height: 48px;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background: #15c8a0;
+  border-color: #15c8a0;
+}
+
+.btn-outline-primary {
+  color: #15c8a0;
+  border-color: #15c8a0;
+}
+
+.btn-outline-primary:hover {
+  background: #15c8a0;
+  color: white;
+}

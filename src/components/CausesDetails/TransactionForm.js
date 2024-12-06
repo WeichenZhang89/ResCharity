@@ -150,80 +150,66 @@ const TransactionForm = ({ onLogout, token }) => {
   return (
     <>
       <div className="page-container">
-        <div className="form-container">
-          <div className="d-flex justify-content-between align-items-center mb-4">
-            <h2 className="heading">Make a Contribution</h2>
-            <button
-              type="button"
-              className="btn btn-danger logout-button"
-              onClick={handleLogoutClick}
-            >
-              Logout
-            </button>
+        <div className="form-container p-4">
+          <h2 className="text-center mb-4">Donation Information</h2>
+
+          {/* 预设金额按钮组 */}
+          <div className="preset-amounts-row mb-3">
+            {[100, 500, 1000, 2500].map((amount) => (
+              <button
+                key={amount}
+                type="button"
+                className={`preset-btn ${
+                  selectedPreset === amount ? "active" : ""
+                }`}
+                onClick={() => handlePresetAmount(amount)}
+              >
+                ${amount}
+              </button>
+            ))}
           </div>
 
-          <form onSubmit={handleSubmit}>
-            <div className="form-group mb-1">
-              <input
-                type="text"
-                value={recipient}
-                onChange={handleRecipientChange}
-                className="form-control"
-                style={{
-                  fontSize: "14px",
-                  color: "#666",
-                  background: "#f5f5f5",
-                }}
-              />
-            </div>
-            <div className="amount-input-container mb-1">
-              <input
-                type="text"
-                className="form-control"
-                value={formatNumber(amount)}
-                onChange={handleInputChange}
-                placeholder="Enter amount"
-              />
-              <div className="preset-amounts">
-                {presetAmounts.map((presetAmount) => (
-                  <button
-                    key={presetAmount}
-                    type="button"
-                    className={`preset-amount-btn ${
-                      amount === String(presetAmount) ? "active" : ""
-                    }`}
-                    onClick={() => handlePresetAmount(presetAmount)}
-                  >
-                    ${presetAmount}
-                  </button>
-                ))}
-              </div>
-              <input
-                type="range"
-                min="0"
-                max={remainingAmount}
-                value={amount || 0}
-                className="amount-slider"
-                onChange={handleSliderChange}
-              />
-              <div className="remaining-amount mb-1">
-                Remaining Goal: ${formatNumber(remainingAmount)}
-              </div>
-            </div>
+          {/* 金额输入框 */}
+          <div className="amount-input-wrapper mb-3">
+            <input
+              type="text"
+              className="form-control amount-input"
+              value={formatNumber(amount)}
+              onChange={handleInputChange}
+              placeholder="Enter custom amount"
+            />
+            <span className="currency-label">USD</span>
+          </div>
 
-            <div className="form-group d-flex gap-3">
-              <button type="submit" className="button flex-grow-1">
-                Donate Once
-              </button>
-              <button
-                type="button"
-                className="button flex-grow-1"
-                onClick={handleMonthlyDonate}
-              >
-                Donate Monthly
-              </button>
+          {/* 保证信息 */}
+          <div className="guarantee-box mb-4">
+            <div className="d-flex align-items-center mb-2">
+              <i className="fas fa-check-circle text-success me-2"></i>
+              <span className="guarantee-text">
+                We guarantee that 100% of your donation goes straight to
+                funding!
+              </span>
             </div>
-          </form>
+            <div className="public-key-text text-muted small">{recipient}</div>
+          </div>
+
+          {/* 捐赠按钮 */}
+          <div className="d-flex gap-3">
+            <button
+              type="submit"
+              className="btn btn-primary flex-grow-1"
+              onClick={handleSubmit}
+            >
+              One Time
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline-primary flex-grow-1"
+              onClick={handleMonthlyDonate}
+            >
+              Monthly
+            </button>
+          </div>
         </div>
       </div>
 
