@@ -26,9 +26,14 @@ const CausesDetailsRight = ({ cause }) => {
 
   useEffect(() => {
     const loadTransactions = async () => {
-      console.log("Loading transactions for cause:", cause?.targetPublicKey);
-      const data = await fetchTransactions(cause?.targetPublicKey);
-      console.log("Fetched transactions:", data);
+      console.log("Right: Loading transactions for cause:", cause?.targetPublicKey);
+      if (!cause?.targetPublicKey) {
+        console.log("No target public key found");
+        return;
+      }
+
+      const data = await fetchTransactions(cause.targetPublicKey);
+      console.log("Right: Fetched transactions:", data);
       
       if (data && data.length > 0) {
         const sortedData = data.sort((a, b) => {
@@ -40,9 +45,7 @@ const CausesDetailsRight = ({ cause }) => {
       }
     };
     
-    if (cause?.targetPublicKey) {
-      loadTransactions();
-    }
+    loadTransactions();
   }, [cause?.targetPublicKey]);
 
   const indexOfLastTransaction = currentPage * transactionsPerPage;

@@ -13,11 +13,11 @@ const AboutPage = () => {
             <div className="about-page__left">
               <div className="about-page__img">
                 <Image src={image.src} alt="" />
-                <div className="about-page__trusted">
+                {/* <div className="about-page__trusted">
                   <h3>
                     We're trusted by <span>9,8750</span> donors
                   </h3>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -47,9 +47,9 @@ const AboutPage = () => {
                 ResCharity is the safest and most reliable donation platform
               </h3>
               <div className="about-five__progress-wrap">
-                {aboutProgress.map((progress) => (
+                {/* {aboutProgress.map((progress) => (
                   <AboutProgressbar key={progress.id} progress={progress} />
-                ))}
+                ))} */}
               </div>
             </div>
           </div>

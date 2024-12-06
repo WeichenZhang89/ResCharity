@@ -37,13 +37,15 @@ const isValidDate = (timestamp) => {
   return false;
 };
 
-const DonationChart = () => {
+const DonationChart = ({ cause }) => {
   const [chartData, setChartData] = useState({ labels: [], datasets: [] });
   const { fetchTransactions } = useTransactionData();
 
   useEffect(() => {
     const processTransactions = async () => {
-      const transactions = await fetchTransactions();
+      console.log("Chart: Loading transactions for:", cause?.targetPublicKey);
+      const transactions = await fetchTransactions(cause?.targetPublicKey);
+      console.log("Chart: Fetched transactions:", transactions);
 
       // 使用数组索引作为序列号
       let runningTotal = 0;

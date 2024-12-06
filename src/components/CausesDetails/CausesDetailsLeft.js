@@ -6,6 +6,7 @@ import { Col, Image, Row } from "react-bootstrap";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import DonationChart from "./DonationChart";
+import { useTransactionData } from "@/hooks/useTransactionData";
 
 const Login = dynamic(() => import("./Login"), {
   ssr: false,
@@ -24,6 +25,8 @@ const CausesDetailsLeft = ({ cause }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState(null);
   const [isLoadingAfterLogin, setIsLoadingAfterLogin] = useState(false);
+  const [raisedAmount, setRaisedAmount] = useState(0);
+  const { fetchTransactions } = useTransactionData();
 
   useEffect(() => {
     const storedToken = sessionStorage.getItem("token");
@@ -32,6 +35,20 @@ const CausesDetailsLeft = ({ cause }) => {
       setIsAuthenticated(true);
     }
   }, []);
+
+  useEffect(() => {
+    const loadTransactions = async () => {
+      const data = await fetchTransactions(cause?.targetPublicKey);
+      const total = data.reduce((sum, tx) => {
+        return sum + parseInt(tx.transaction.value.outputs[0].amount);
+      }, 0);
+      setRaisedAmount(total);
+    };
+    
+    if (cause?.targetPublicKey) {
+      loadTransactions();
+    }
+  }, [cause?.targetPublicKey]);
 
   const handleLogin = (authToken) => {
     setIsLoadingAfterLogin(true);
@@ -61,7 +78,7 @@ const CausesDetailsLeft = ({ cause }) => {
 
   const raisedNumber = +cause.raised.replace(/[^0-9.-]+/g, "");
   const goalNumber = +cause.goal.replace(/[^0-9.-]+/g, "");
-  const percent = Math.min(Math.round((raisedNumber / goalNumber) * 100), 100) + "%";
+  const percent = Math.min(Math.round((raisedAmount / goalNumber) * 100), 100) + "%";
 
   return (
     <div className="causes-details__left-bar">
@@ -89,7 +106,7 @@ const CausesDetailsLeft = ({ cause }) => {
           </div>
           <div className="causes-details__goals">
             <p>
-              <span>{formatAmount(raisedNumber)}</span> Raised
+              <span>{formatAmount(raisedAmount)}</span> Raised
             </p>
             <p>
               <span>{formatAmount(goalNumber)}</span> Goal
@@ -105,7 +122,7 @@ const CausesDetailsLeft = ({ cause }) => {
       </div>
       <div className="causes-details__chart-box">
         <h3>Donation Progress Over Time</h3>
-        <DonationChart />
+        <DonationChart cause={cause} />
       </div>
       <div className="causes-details__share">
         <div className="causes-details__share-btn-box">

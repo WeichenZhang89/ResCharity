@@ -1,10 +1,27 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image } from "react-bootstrap";
 import ReactVisibilitySensor from "react-visibility-sensor";
+import { useTransactionData } from "@/hooks/useTransactionData";
 
 const CausesSingle = ({ cause = {}, causePage }) => {
   const [countStart, setCountStart] = useState(false);
+  const [raisedAmount, setRaisedAmount] = useState(0);
+  const { fetchTransactions } = useTransactionData();
+
+  useEffect(() => {
+    const loadTransactions = async () => {
+      const data = await fetchTransactions(cause?.targetPublicKey);
+      const total = data.reduce((sum, tx) => {
+        return sum + parseInt(tx.transaction.value.outputs[0].amount);
+      }, 0);
+      setRaisedAmount(total);
+    };
+    
+    if (cause?.targetPublicKey) {
+      loadTransactions();
+    }
+  }, [cause?.targetPublicKey]);
 
   const onVisibilityChange = (isVisible) => {
     if (isVisible) {
@@ -21,9 +38,8 @@ const CausesSingle = ({ cause = {}, causePage }) => {
     }).format(amount);
   };
 
-  const raisedNumber = +cause.raised.replace(/[^0-9.-]+/g, "");
   const goalNumber = +cause.goal.replace(/[^0-9.-]+/g, "");
-  const percent = Math.min(Math.round((raisedNumber / goalNumber) * 100), 100);
+  const percent = Math.min(Math.round((raisedAmount / goalNumber) * 100), 100);
 
   return (
     <div className={causePage ? "" : "my-4"}>
@@ -70,7 +86,7 @@ const CausesSingle = ({ cause = {}, causePage }) => {
           </ReactVisibilitySensor>
           <div className="causes-one__goals">
             <p>
-              <span>{formatAmount(raisedNumber)}</span> Raised
+              <span>{formatAmount(raisedAmount)}</span> Raised
             </p>
             <p>
               <span>{formatAmount(goalNumber)}</span> Goal

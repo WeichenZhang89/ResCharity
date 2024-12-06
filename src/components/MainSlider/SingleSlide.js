@@ -21,7 +21,7 @@ const SingleSlide = ({ slide = {} }) => {
                 {title} <br />
                 with ResVault
               </h2>
-              <a href={href} className="thm-btn">
+              <a href={"/causes"} className="thm-btn">
                 <i className="fas fa-arrow-circle-right"></i>Learn More
               </a>
               {/* <div className="main-slider__shape-1 zoom-fade">

@@ -1,29 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Col } from "react-bootstrap";
 import ReactVisibilitySensor from "react-visibility-sensor";
 import Link from "next/link";
-
-const countBar = [
-  {
-    id: 1,
-    title: "Charity",
-    percent: 83,
-  },
-  {
-    id: 2,
-    title: "Donations",
-    percent: 38,
-  },
-];
+import { useTransactionData } from "../../hooks/useTransactionData";
 
 const CharityContent = () => {
-  const [countStart, setCountStart] = useState(false);
+  const [raisedAmount, setRaisedAmount] = useState(0);
+  const { fetchTransactions } = useTransactionData();
+  const goalNumber = 30000;
 
-  const onVisibilityChange = (isVisible) => {
-    if (isVisible) {
-      setCountStart(true);
-    }
-  };
+  useEffect(() => {
+    const loadTransactions = async () => {
+      const data = await fetchTransactions("CAvCqZP5xqk7E9baKSvAoFZazYYjNbgrgtnDicVMb25i");
+      const total = data.reduce((sum, tx) => {
+        return sum + parseInt(tx.transaction.value.outputs[0].amount);
+      }, 0);
+      setRaisedAmount(total);
+    };
+    
+    loadTransactions();
+  }, []);
+
+  const percent = Math.min(Math.round((raisedAmount / goalNumber) * 100), 100);
 
   return (
     <Col xl={6} lg={6}>
@@ -62,34 +60,17 @@ const CharityContent = () => {
           </div>
         </div> */}
         <div className="welcome-one__progress">
-          {countBar.map(({ id, title, percent }) => (
-            <div className="welcome-one__progress-single" key={id}>
-              <h4 className="welcome-one__progress-title">{title}</h4>
-              <ReactVisibilitySensor
-                offset={{ top: 10 }}
-                delayedCall={true}
-                onChange={onVisibilityChange}
-              >
-                <div className="bar">
-                  <div
-                    className="bar-inner count-bar"
-                    data-percent={`${countStart ? percent : 0}%`}
-                    style={{
-                      width: `${countStart ? percent : 0}%`,
-                      opacity: 1,
-                    }}
-                  >
-                    <div
-                      className="count-text"
-                      style={{ opacity: countStart ? 1 : 0 }}
-                    >
-                      {countStart ? percent : 0}%
-                    </div>
-                  </div>
-                </div>
-              </ReactVisibilitySensor>
+          <div className="bar">
+            <div
+              className="bar-inner count-bar"
+              style={{ width: `${percent}%`, opacity: 1 }}
+              data-percent={`${percent}%`}
+            >
+              <div style={{ opacity: 1 }} className="count-text">
+                {percent}%
+              </div>
             </div>
-          ))}
+          </div>
         </div>
         <Link href="/causes">
           <a className="welcome-one__btn thm-btn">

@@ -19,21 +19,21 @@ export function useCausesPageData() {
     {
       id: 2,
       image: "causes-page-img-2.jpg",
-      category: "Medical",
-      title: "Our donation is hope for poor childrens",
+      category: "Children",
+      title: "CASA of Sacramento County - Making Memories",
       description: "Get children food",
       raised: "25,270",
-      goal: "30,000",
+      goal: "2000",
       targetPublicKey: "2sSeBbvCLfHMNKgJr1MzQaaDTxoYES2UZpFxNQt8xHXJ"
     },
     {
       id: 3,
       image: "causes-page-img-3.jpg",
-      category: "Medical",
-      title: "Education for Poor Children",
+      category: "Education",
+      title: "The Educational Opportunity Program (EOP) at UC Davis",
       description: "Get children Education",
       raised: "25,270",
-      goal: "30,000",
+      goal: "30",
       targetPublicKey: "G1paLjaCpjbeAQCtbsSrXcFtYWwiSzYVRU8o96cBru8h"
     },
     // {
