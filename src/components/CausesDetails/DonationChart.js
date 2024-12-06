@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,9 +8,9 @@ import {
   Title,
   Tooltip,
   Legend,
-  Filler
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
+  Filler,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
 import { useTransactionData } from "@/hooks/useTransactionData";
 
 ChartJS.register(
@@ -24,9 +24,17 @@ ChartJS.register(
   Filler
 );
 
-// 添加日期验证辅助函数
-const isValidDate = (date) => {
-  return date instanceof Date && !isNaN(date);
+// 改进日期验证函数
+const isValidDate = (timestamp) => {
+  // 检查是否是数字型时间戳
+  if (typeof timestamp === "number") {
+    return !isNaN(new Date(timestamp).getTime());
+  }
+  // 检查是否是字符串型时间戳
+  if (typeof timestamp === "string") {
+    return !isNaN(Date.parse(timestamp));
+  }
+  return false;
 };
 
 const DonationChart = () => {
@@ -36,56 +44,39 @@ const DonationChart = () => {
   useEffect(() => {
     const processTransactions = async () => {
       const transactions = await fetchTransactions();
-      
-      // 按日期排序交易
-      const sortedTransactions = transactions.sort((a, b) => {
-        const dateA = new Date(a.transaction.value.timestamp);
-        const dateB = new Date(b.transaction.value.timestamp);
-        return dateA - dateB;
-      });
 
-      // 处理数据以创建累计总额
+      // 使用数组索引作为序列号
       let runningTotal = 0;
-      const processedData = sortedTransactions.map(tx => {
+      const processedData = transactions.map((tx, index) => {
         const amount = parseInt(tx.transaction.value.outputs[0].amount);
         runningTotal += amount;
-        
-        // 格式化日期
-        const date = new Date(tx.transaction.value.timestamp);
-        const formattedDate = isValidDate(date) 
-          ? date.toLocaleDateString('en-US', {
-              month: 'short',
-              day: 'numeric',
-              year: 'numeric'
-            })
-          : 'Invalid Date';
+
+        // 使用序号代替日期
+        const formattedDate = `Transaction ${index + 1}`;
+        // 或者使用交易ID的前几位
+        // const formattedDate = tx.transaction.value.id.substring(0, 8);
 
         return {
           date: formattedDate,
-          total: runningTotal
+          total: runningTotal,
         };
       });
 
-      // 准备图表数据
-      const labels = processedData.map(item => item.date);
-      const data = processedData.map(item => item.total);
-
       setChartData({
-        labels,
+        labels: processedData.map((item) => item.date),
         datasets: [
           {
-            label: 'Total Donations',
-            data: data,
+            label: "Total Donations",
+            data: processedData.map((item) => item.total),
             fill: true,
-            borderColor: '#15c8a0',
-            backgroundColor: 'rgba(21, 200, 160, 0.1)',
+            borderColor: "#15c8a0",
+            backgroundColor: "rgba(21, 200, 160, 0.1)",
             tension: 0.4,
             pointRadius: 4,
-            pointBackgroundColor: '#15c8a0',
-            pointBorderColor: '#fff',
+            pointBackgroundColor: "#15c8a0",
             pointBorderWidth: 2,
-          }
-        ]
+          },
+        ],
       });
     };
 
@@ -97,50 +88,53 @@ const DonationChart = () => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        display: false
+        display: false,
       },
       tooltip: {
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
         padding: 12,
-        titleColor: '#fff',
-        bodyColor: '#fff',
+        titleColor: "#fff",
+        bodyColor: "#fff",
         bodySpacing: 4,
         callbacks: {
-          label: function(context) {
+          label: function (context) {
             return `$${context.parsed.y.toLocaleString()}`;
-          }
-        }
-      }
+          },
+        },
+      },
     },
     scales: {
       x: {
         grid: {
-          display: false
+          display: false,
         },
         ticks: {
           maxRotation: 45,
-          minRotation: 45
-        }
+          minRotation: 45,
+        },
       },
       y: {
         beginAtZero: true,
         grid: {
-          color: 'rgba(0, 0, 0, 0.1)'
+          color: "rgba(0, 0, 0, 0.1)",
         },
         ticks: {
-          callback: function(value) {
-            return '$' + value.toLocaleString();
-          }
-        }
-      }
-    }
+          callback: function (value) {
+            return "$" + value.toLocaleString();
+          },
+        },
+      },
+    },
   };
 
   return (
-    <div className="donation-chart-container" style={{ height: '400px', marginTop: '30px' }}>
+    <div
+      className="donation-chart-container"
+      style={{ height: "400px", marginTop: "30px" }}
+    >
       <Line data={chartData} options={options} />
     </div>
   );
 };
 
-export default DonationChart; 
+export default DonationChart;
