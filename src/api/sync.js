@@ -62,7 +62,7 @@ const upload = multer({
 
 // MongoDB sync configuration
 const mongoConfig = {
-  uri: process.env.MONGODB_URI || 'mongodb://localhost:27017',
+  uri: process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017' || 'mongodb://localhost:27017' ,
   dbName: 'myDatabase',
   collectionName: 'myCollection',
 };

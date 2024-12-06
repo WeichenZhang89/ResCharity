@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   }
 
   const client = new MongoClient(
-    process.env.MONGODB_URI || "mongodb://localhost:27017"
+    process.env.MONGODB_URI || "mongodb://127.0.0.1:27017" || "mongodb://localhost:27017" 
   );
 
   try {
