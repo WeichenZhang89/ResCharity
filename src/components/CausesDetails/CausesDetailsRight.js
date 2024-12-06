@@ -26,19 +26,23 @@ const CausesDetailsRight = ({ cause }) => {
 
   useEffect(() => {
     const loadTransactions = async () => {
-      const data = await fetchTransactions();
-      const matchingTransactions = data.filter(tx => 
-        tx.transaction.value.outputs[0].public_keys[0] === cause?.targetPublicKey
-      );
-      const sortedData = matchingTransactions.sort((a, b) => {
-        const amountA = parseInt(a.transaction.value.outputs[0].amount);
-        const amountB = parseInt(b.transaction.value.outputs[0].amount);
-        return amountB - amountA;
-      });
-      setTransactions(sortedData);
+      console.log("Loading transactions for cause:", cause?.targetPublicKey);
+      const data = await fetchTransactions(cause?.targetPublicKey);
+      console.log("Fetched transactions:", data);
+      
+      if (data && data.length > 0) {
+        const sortedData = data.sort((a, b) => {
+          const amountA = parseInt(a.transaction.value.outputs[0].amount);
+          const amountB = parseInt(b.transaction.value.outputs[0].amount);
+          return amountB - amountA;
+        });
+        setTransactions(sortedData);
+      }
     };
     
-    loadTransactions();
+    if (cause?.targetPublicKey) {
+      loadTransactions();
+    }
   }, [cause?.targetPublicKey]);
 
   const indexOfLastTransaction = currentPage * transactionsPerPage;

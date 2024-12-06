@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import ResVaultSDK from "resvault-sdk";
 import NotificationModal from "./NotificationModal";
-import { targetPublicKey } from "../../config/targetPublicKey";
 import { useDonations } from "@/context/DonationContext";
 
-const TransactionForm = ({ onLogout, token }) => {
+const TransactionForm = ({ onLogout, token, targetPublicKey }) => {
   const [amount, setAmount] = useState("");
   const [recipient, setRecipient] = useState(targetPublicKey);
   const [showModal, setShowModal] = useState(false);
@@ -56,6 +55,12 @@ const TransactionForm = ({ onLogout, token }) => {
       setAmount(String(Math.min(numValue, remainingAmount)));
     }
   };
+
+  useEffect(() => {
+    if (targetPublicKey) {
+      setRecipient(targetPublicKey);
+    }
+  }, [targetPublicKey]);
 
   useEffect(() => {
     const sdk = sdkRef.current;
@@ -190,7 +195,9 @@ const TransactionForm = ({ onLogout, token }) => {
                 funding!
               </span>
             </div>
-            <div className="public-key-text text-muted small">{recipient}</div>
+            <div className="public-key-text text-muted small">
+              Donating to: {recipient}
+            </div>
           </div>
 
           {/* 捐赠按钮 */}

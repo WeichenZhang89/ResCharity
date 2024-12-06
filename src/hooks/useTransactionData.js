@@ -5,10 +5,14 @@ export function useTransactionData() {
   const { setTotalDonations } = useDonations();
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchTransactions = async (publicKey = null) => {
+  const fetchTransactions = async (targetPublicKey = null) => {
     try {
       console.log('Starting transaction fetch...');
-      const response = await fetch('/api/transactions');
+      const url = targetPublicKey 
+        ? `/api/transactions?targetPublicKey=${targetPublicKey}`
+        : '/api/transactions';
+        
+      const response = await fetch(url);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -21,8 +25,8 @@ export function useTransactionData() {
         return [];
       }
 
-      const filteredData = publicKey
-        ? data.filter(tx => tx.transaction.value.outputs[0].public_keys[0] === publicKey)
+      const filteredData = targetPublicKey
+        ? data.filter(tx => tx.transaction.value.outputs[0].public_keys[0] === targetPublicKey)
         : data;
 
       const total = filteredData.reduce((sum, tx) => {

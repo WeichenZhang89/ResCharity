@@ -1,11 +1,12 @@
 import { MongoClient } from "mongodb";
 
-const targetPublicKey = "CAvCqZP5xqk7E9baKSvAoFZazYYjNbgrgtnDicVMb25i";
-
 export default async function handler(req, res) {
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method not allowed" });
   }
+
+  // Get the target public key from query params if provided
+  const { targetPublicKey } = req.query;
 
   const client = new MongoClient(
     process.env.MONGODB_URI || "mongodb://127.0.0.1:27017" || "mongodb://localhost:27017" 
