@@ -10,6 +10,7 @@ const TransactionForm = ({ onLogout, token }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalMessage, setModalMessage] = useState("");
+  const [transactionData, setTransactionData] = useState(null);
 
   const { remainingAmount } = useDonations();
   const sdkRef = useRef(null);
@@ -70,12 +71,21 @@ const TransactionForm = ({ onLogout, token }) => {
         message.data.success !== undefined
       ) {
         if (message.data.success) {
+          const receiptData = {
+            transactionId: message.data.data.postTransaction.id,
+            amount: formatNumber(amount),
+            recipient: recipient,
+            date: new Date().toLocaleString(),
+            status: 'Success'
+          };
+          
           setModalTitle("Success");
           setModalMessage(
             "Thank you for your contribution!\n" +
-              "Transaction ID: " +
-              message.data.data.postTransaction.id
+            "Transaction ID:\n" +
+            receiptData.transactionId
           );
+          setTransactionData(receiptData);
         } else {
           setModalTitle("Transaction Failed");
           setModalMessage(
@@ -92,7 +102,7 @@ const TransactionForm = ({ onLogout, token }) => {
     return () => {
       sdk.removeMessageListener(messageHandler);
     };
-  }, []);
+  }, [amount, recipient]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -207,6 +217,7 @@ const TransactionForm = ({ onLogout, token }) => {
         title={modalTitle}
         message={modalMessage}
         onClose={handleCloseModal}
+        transactionData={transactionData}
       />
     </>
   );
