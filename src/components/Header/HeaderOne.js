@@ -81,7 +81,7 @@ const HeaderOne = () => {
                     <a href="tel:92 666 888 0000">92 666 888 0000</a>
                   </div> */}
 
-                <Link href="/causes-details">
+                <Link href="/causes">
                   <a className="main-menu__donate-btn">
                     <i className="fa fa-heart"></i>Donate
                   </a>

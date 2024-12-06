@@ -12,8 +12,8 @@ export function useCausesPageData() {
       title: "Yolo County SPCA Community Cat Kindness Fund",
       description:
         "The Community Cat Kindness Fund has been set up by the Yolo County SPCA to help provide care for community cats including veterinary care and humane euthanasia when needed for medical reasons. Even with discounted services, paying for the veterinary care for community cats is often a hardship on volunteers. This fund will help caring cat lovers to assist community cats in need. All contributors will receive a thank you from the Yolo County SPCA with a tax-deductible receipt. ",
-      raised: totalDonations ? totalDonations.toString() : "0",
-      goal: "30000",
+      raised: "25,270",
+      goal: "300000",
       targetPublicKey: "CAvCqZP5xqk7E9baKSvAoFZazYYjNbgrgtnDicVMb25i"
     },
     {
@@ -33,7 +33,7 @@ export function useCausesPageData() {
       title: "The Educational Opportunity Program (EOP) at UC Davis",
       description: "Get children Education",
       raised: "25,270",
-      goal: "30",
+      goal: "20000",
       targetPublicKey: "G1paLjaCpjbeAQCtbsSrXcFtYWwiSzYVRU8o96cBru8h"
     },
     // {
