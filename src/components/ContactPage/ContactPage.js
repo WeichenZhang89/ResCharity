@@ -7,11 +7,18 @@ const { image, tel, email, officeAddress, description } = contactData;
 
 const ContactPage = () => {
   return (
-    <section className="contact-page">
+    <section 
+      className="contact-page" 
+      style={{
+        backgroundImage: `url('/images/contact us.webp')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
+    >
       <Container>
         <div className="section-title text-center">
-          <span className="section-title__tagline">Contact With Us</span>
-          <h2 className="section-title__title">
+          <span className="section-title__tagline text-white">Contact With Us</span>
+          <h2 className="section-title__title text-white">
             We love to hear from our <br /> happy customers
           </h2>
         </div>

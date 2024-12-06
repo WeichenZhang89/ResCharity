@@ -6,7 +6,7 @@ import { useTransactionData } from "@/hooks/useTransactionData";
 const CausesDetailsRight = () => {
   const [transactions, setTransactions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const transactionsPerPage = 5;
+  const transactionsPerPage = 8;
   const { fetchTransactions } = useTransactionData();
 
   const truncateString = (str, start = 6, end = 4) => {
