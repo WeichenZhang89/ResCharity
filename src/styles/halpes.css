@@ -7715,3 +7715,56 @@ h6 {
 .contact-page .section-title__tagline {
   color: #ffffff;
 }
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 15px 30px;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 30px 0px rgb(0, 0, 0, 0.07);
+  border-radius: 0;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--thm-gray);
+  transition: all 0.3s ease;
+}
+
+.custom-file-upload:hover {
+  background-color: #f7f7f7;
+}
+
+.contact-page__file-input {
+  display: none;
+}
+
+.custom-file-upload span {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.contact-page__file-input {
+  display: none;
+}
+
+.contact-page__file-btn {
+  width: auto;
+  text-align: left;
+  margin-bottom: 20px;
+  padding: 12px 30px;
+  background-color: var(--thm-primary);
+  color: #fff;
+  cursor: pointer;
+  transition: 500ms;
+  font-size: 14px;
+}
+
+.contact-page__file-btn:hover {
+  background: var(--thm-black);
+  color: #ffffff;
+}
+
+.contact-page__file-btn i {
+  margin-right: 8px;
+  font-size: 14px;
+}
