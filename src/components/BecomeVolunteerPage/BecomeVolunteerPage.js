@@ -41,15 +41,14 @@ const BecomeVolunteerPage = () => {
                   </li>
                 ))}
               </ul>
-              <div className="become-volunteer-page__phone">
-                <div className="become-volunteer-page__phone-icon">
+
+              {/* <div className="become-volunteer-page__phone-icon">
                   <span className="icon-chat"></span>
-                </div>
-                <div className="become-volunteer-page__phone-text">
+                </div> */}
+              {/* <div className="become-volunteer-page__phone-text">
                   <p>Call Anytime</p>
                   <a href="tel:1 420 233 6722">1 420 233 6722</a>
-                </div>
-              </div>
+                </div> */}
             </div>
           </Col>
           <Col xl={6} lg={6}>

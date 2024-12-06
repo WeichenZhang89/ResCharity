@@ -10,7 +10,7 @@ const Contact = () => {
     <Layout pageTitle="Contact">
       <PageHeader pageTitle="Contact" />
       <ContactPage />
-      {/*<GoogleMap />*/}
+      <GoogleMap />
       {/*<BecomeVolunteer />*/}
     </Layout>
   );

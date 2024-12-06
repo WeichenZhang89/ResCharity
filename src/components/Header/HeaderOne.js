@@ -36,8 +36,7 @@ const HeaderOne = () => {
                 </div>
               </div>
             </div>
-            <div className="main-menu-wrapper__right">
-            </div>
+            <div className="main-menu-wrapper__right"></div>
           </div>
         </div>
         <div className="main-menu-wrapper__bottom">
@@ -73,15 +72,15 @@ const HeaderOne = () => {
                   className="main-menu__search search-toggler icon-magnifying-glass"
                 ></span>
                 <a href="#" className="main-menu__cart icon-shopping-cart "></a>
-                <div className="main-menu__phone-contact">
-                  <div className="main-menu__phone-icon">
+
+                {/* <div className="main-menu__phone-icon">
                     <span className="icon-chat"></span>
-                  </div>
-                  <div className="main-menu__phone-number">
+                  </div> */}
+                {/* <div className="main-menu__phone-number">
                     <p>Call Anytime</p>
                     <a href="tel:92 666 888 0000">92 666 888 0000</a>
-                  </div>
-                </div>
+                  </div> */}
+
                 <Link href="/causes-details">
                   <a className="main-menu__donate-btn">
                     <i className="fa fa-heart"></i>Donate

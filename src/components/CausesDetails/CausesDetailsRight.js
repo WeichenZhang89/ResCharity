@@ -5,7 +5,8 @@ import { useTransactionData } from "@/hooks/useTransactionData";
 
 const CausesDetailsRight = () => {
   const [transactions, setTransactions] = useState([]);
-  const [showAll, setShowAll] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const transactionsPerPage = 8;
   const { fetchTransactions } = useTransactionData();
 
   const truncateString = (str, start = 6, end = 4) => {
@@ -37,13 +38,25 @@ const CausesDetailsRight = () => {
     loadTransactions();
   }, []);
 
-  const displayedTransactions = showAll ? transactions : transactions.slice(0, 5);
+  // 计算当前页的交易
+  const indexOfLastTransaction = currentPage * transactionsPerPage;
+  const indexOfFirstTransaction = indexOfLastTransaction - transactionsPerPage;
+  const currentTransactions = transactions.slice(indexOfFirstTransaction, indexOfLastTransaction);
+  const totalPages = Math.ceil(transactions.length / transactionsPerPage);
+
+  const handlePrevPage = () => {
+    setCurrentPage(prev => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(prev => Math.min(prev + 1, totalPages));
+  };
 
   return (
     <div className="causes-details__right">
       <div className="causes-details__transactions">
         <h3>Transactions</h3>
-        {displayedTransactions.map((tx, index) => {
+        {currentTransactions.map((tx, index) => {
           const sender = tx.transaction.value.inputs[0].owners_before[0];
           const amount = parseInt(tx.transaction.value.outputs[0].amount);
           return (
@@ -55,14 +68,25 @@ const CausesDetailsRight = () => {
             </div>
           );
         })}
-        {transactions.length > 5 && (
+        <div className="pagination-controls">
           <button 
-            onClick={() => setShowAll(!showAll)}
-            className="toggle-button"
+            onClick={handlePrevPage} 
+            disabled={currentPage === 1}
+            className="pagination-btn"
           >
-            {showAll ? 'Show Less' : 'View All'}
+            <i className="fas fa-chevron-left"></i>
           </button>
-        )}
+          <span className="page-info">
+            {currentPage} / {totalPages}
+          </span>
+          <button 
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className="pagination-btn"
+          >
+            <i className="fas fa-chevron-right"></i>
+          </button>
+        </div>
       </div>
     </div>
   );

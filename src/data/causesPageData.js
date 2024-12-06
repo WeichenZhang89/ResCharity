@@ -2,7 +2,7 @@ import { useDonations } from "@/context/DonationContext";
 
 export function useCausesPageData() {
   const { totalDonations } = useDonations();
-  console.log('CausesPage - Total Donations:', totalDonations);
+  console.log("CausesPage - Total Donations:", totalDonations);
 
   return [
     {
