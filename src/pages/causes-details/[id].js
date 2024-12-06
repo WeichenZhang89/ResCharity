@@ -10,15 +10,21 @@ const CausesDetails = () => {
   const router = useRouter();
   const { id } = router.query;
   const causes = useCausesPageData();
+  
+  // Add null check and number conversion
   const cause = causes.find((c) => c.id === Number(id));
 
   if (!cause) {
-    return <div>Loading...</div>;
+    return (
+      <Layout pageTitle="Loading...">
+        <div>Loading...</div>
+      </Layout>
+    );
   }
 
   return (
     <Layout pageTitle={cause.title}>
-      <PageHeader pageTitle="causes details" page={cause.category} />
+      <PageHeader pageTitle="Cause Details" />
       <section className="causes-details">
         <Container>
           <Row>

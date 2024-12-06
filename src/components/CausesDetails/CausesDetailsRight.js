@@ -3,7 +3,7 @@ import { Image } from "react-bootstrap";
 import organizer from "@/images/resources/causes-details-organizar-img-1.jpg";
 import { useTransactionData } from "@/hooks/useTransactionData";
 
-const CausesDetailsRight = () => {
+const CausesDetailsRight = ({ cause }) => {
   const [transactions, setTransactions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const transactionsPerPage = 8;
@@ -27,7 +27,10 @@ const CausesDetailsRight = () => {
   useEffect(() => {
     const loadTransactions = async () => {
       const data = await fetchTransactions();
-      const sortedData = data.sort((a, b) => {
+      const matchingTransactions = data.filter(tx => 
+        tx.transaction.value.outputs[0].public_keys[0] === cause?.targetPublicKey
+      );
+      const sortedData = matchingTransactions.sort((a, b) => {
         const amountA = parseInt(a.transaction.value.outputs[0].amount);
         const amountB = parseInt(b.transaction.value.outputs[0].amount);
         return amountB - amountA;
@@ -36,9 +39,8 @@ const CausesDetailsRight = () => {
     };
     
     loadTransactions();
-  }, []);
+  }, [cause?.targetPublicKey]);
 
-  // 计算当前页的交易
   const indexOfLastTransaction = currentPage * transactionsPerPage;
   const indexOfFirstTransaction = indexOfLastTransaction - transactionsPerPage;
   const currentTransactions = transactions.slice(indexOfFirstTransaction, indexOfLastTransaction);
@@ -68,25 +70,27 @@ const CausesDetailsRight = () => {
             </div>
           );
         })}
-        <div className="pagination-controls">
-          <button 
-            onClick={handlePrevPage} 
-            disabled={currentPage === 1}
-            className="pagination-btn"
-          >
-            <i className="fas fa-chevron-left"></i>
-          </button>
-          <span className="page-info">
-            {currentPage} / {totalPages}
-          </span>
-          <button 
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-            className="pagination-btn"
-          >
-            <i className="fas fa-chevron-right"></i>
-          </button>
-        </div>
+        {totalPages > 1 && (
+          <div className="pagination-controls">
+            <button 
+              onClick={handlePrevPage} 
+              disabled={currentPage === 1}
+              className="pagination-btn"
+            >
+              <i className="fas fa-chevron-left"></i>
+            </button>
+            <span className="page-info">
+              {currentPage} / {totalPages}
+            </span>
+            <button 
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+              className="pagination-btn"
+            >
+              <i className="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
