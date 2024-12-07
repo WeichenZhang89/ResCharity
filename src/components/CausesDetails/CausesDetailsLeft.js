@@ -20,7 +20,7 @@ const Loader = dynamic(() => import("./Loader"), {
   ssr: false,
 });
 
-const CausesDetailsLeft = ({ cause }) => {
+const CausesDetailsLeft = ({ cause = {} }) => {
   const [showDonationModal, setShowDonationModal] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState(null);
@@ -39,9 +39,9 @@ const CausesDetailsLeft = ({ cause }) => {
   useEffect(() => {
     const loadTransactions = async () => {
       const data = await fetchTransactions(cause?.targetPublicKey);
-      const total = data.reduce((sum, tx) => {
+      const total = data?.reduce((sum, tx) => {
         return sum + parseInt(tx.transaction.value.outputs[0].amount);
-      }, 0);
+      }, 0) || 0;
       setRaisedAmount(total);
     };
     
@@ -76,9 +76,23 @@ const CausesDetailsLeft = ({ cause }) => {
     }).format(amount);
   };
 
-  const raisedNumber = +cause.raised.replace(/[^0-9.-]+/g, "");
-  const goalNumber = +cause.goal.replace(/[^0-9.-]+/g, "");
-  const percent = Math.min(Math.round((raisedAmount / goalNumber) * 100), 100) + "%";
+  const raisedNumber = +(cause?.raised?.replace(/[^0-9.-]+/g, "") || 0);
+  const goalNumber = +(cause?.goal?.replace(/[^0-9.-]+/g, "") || 0);
+  const percent = Math.min(Math.round((raisedAmount / (goalNumber || 1)) * 100), 100) + "%";
+
+  const handleTransactionSuccess = async () => {
+    if (cause?.targetPublicKey) {
+      const data = await fetchTransactions(cause.targetPublicKey);
+      const total = data?.reduce((sum, tx) => {
+        return sum + parseInt(tx.transaction.value.outputs[0].amount);
+      }, 0) || 0;
+      setRaisedAmount(total);
+    }
+  };
+
+  if (!cause) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="causes-details__left-bar">
@@ -151,6 +165,7 @@ const CausesDetailsLeft = ({ cause }) => {
                 onLogout={handleLogout} 
                 token={token} 
                 targetPublicKey={cause.targetPublicKey}
+                onTransactionSuccess={handleTransactionSuccess}
               />
             ) : (
               <Login onLogin={handleLogin} />

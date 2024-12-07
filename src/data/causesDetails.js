@@ -11,17 +11,15 @@ const summaryText = "";
 
 export function useCausesDetails() {
   const { totalDonations } = useDonations();
-  console.log("CausesDetails - Total Donations:", totalDonations); // Debug total in hook
-
-  // Format the number and ensure it's a string
-  const formattedTotal = totalDonations ? totalDonations.toString() : "0";
-  console.log("Formatted Total:", formattedTotal); // Debug formatted value
-
+  
   return {
-    raised: formattedTotal,
+    raised: totalDonations ? totalDonations.toString() : "0",
     goal: "300000",
     category: "Animal Welfare",
     title: "Raise Fund for Community Cats",
+    description: text1,
+    image: "causes-details-img-1.jpg",
+    targetPublicKey: "CAvCqZP5xqk7E9baKSvAoFZazYYjNbgrgtnDicVMb25i",
     images: [image, image2, image3],
     texts: [text1, text2],
     summaryText,
