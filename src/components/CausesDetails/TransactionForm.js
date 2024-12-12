@@ -82,6 +82,7 @@ const TransactionForm = ({ onLogout, token, targetPublicKey, onTransactionSucces
             amount: formatNumber(amount),
             recipient: recipient,
             date: new Date().toLocaleString(),
+            timestamp: Date.now(),
             status: "Success",
           };
 

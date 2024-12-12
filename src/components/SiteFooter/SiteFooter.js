@@ -67,13 +67,13 @@ const SiteFooter = () => {
                   >
                     1,000+
                   </h2>
-                  <p style={{ fontSize: '1rem', margin: '0.5rem 0' }}>Satisfied Users</p>
+                  <p style={{ fontSize: '1rem', margin: '0.5rem 0' }}>Completed Donations</p>
                 </div>
                 <div className="text-center">
                   <h2 
                     style={{ color: logoColor, fontSize: '3rem', fontWeight: 'bold', margin: 0 }}
                   >
-                    10,000+
+                    100,000+
                   </h2>
                   <p style={{ fontSize: '1rem', margin: '0.5rem 0' }}>Donation Amount</p>
                 </div>

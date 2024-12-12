@@ -36,12 +36,7 @@ const CausesDetailsRight = ({ cause }) => {
       console.log("Right: Fetched transactions:", data);
       
       if (data && data.length > 0) {
-        const sortedData = data.sort((a, b) => {
-          const amountA = parseInt(a.transaction.value.outputs[0].amount);
-          const amountB = parseInt(b.transaction.value.outputs[0].amount);
-          return amountB - amountA;
-        });
-        setTransactions(sortedData);
+        setTransactions(data);
       }
     };
     

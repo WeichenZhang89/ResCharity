@@ -39,7 +39,12 @@ export default async function handler(req, res) {
           ],
         },
       },
-      { $sort: { _id: -1 } },
+      { 
+        $sort: { 
+          "transactions.value.timestamp": -1,
+          "_id": -1 
+        }
+      },
       { $project: { transaction: "$transactions", _id: 0 } },
     ];
     const transactions = await collection.aggregate(pipeline).toArray();

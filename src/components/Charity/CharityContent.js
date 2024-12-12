@@ -1,28 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Col } from "react-bootstrap";
-import ReactVisibilitySensor from "react-visibility-sensor";
 import Link from "next/link";
-import { useTransactionData } from "../../hooks/useTransactionData";
 
 const CharityContent = () => {
-  const [raisedAmount, setRaisedAmount] = useState(0);
-  const { fetchTransactions } = useTransactionData();
-  const goalNumber = 30000;
-
-  useEffect(() => {
-    const loadTransactions = async () => {
-      const data = await fetchTransactions("CAvCqZP5xqk7E9baKSvAoFZazYYjNbgrgtnDicVMb25i");
-      const total = data.reduce((sum, tx) => {
-        return sum + parseInt(tx.transaction.value.outputs[0].amount);
-      }, 0);
-      setRaisedAmount(total);
-    };
-    
-    loadTransactions();
-  }, []);
-
-  const percent = Math.min(Math.round((raisedAmount / goalNumber) * 100), 100);
-
   return (
     <Col xl={6} lg={6}>
       <div className="welcome-one__right">
@@ -59,19 +39,6 @@ const CharityContent = () => {
             </p>
           </div>
         </div> */}
-        <div className="welcome-one__progress">
-          <div className="bar">
-            <div
-              className="bar-inner count-bar"
-              style={{ width: `${percent}%`, opacity: 1 }}
-              data-percent={`${percent}%`}
-            >
-              <div style={{ opacity: 1 }} className="count-text">
-                {percent}%
-              </div>
-            </div>
-          </div>
-        </div>
         <Link href="/causes">
           <a className="welcome-one__btn thm-btn">
             <i className="fas fa-arrow-circle-right"></i>Learn More
