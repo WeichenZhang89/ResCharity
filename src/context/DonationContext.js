@@ -8,6 +8,10 @@ export function DonationProvider({ children }) {
 
   const remainingAmount = Math.max(0, GOAL_AMOUNT - totalDonations);
 
+  const isGoalReached = () => {
+    return totalDonations >= GOAL_AMOUNT;
+  };
+
   return (
     <DonationContext.Provider
       value={{
@@ -15,6 +19,7 @@ export function DonationProvider({ children }) {
         setTotalDonations,
         goalAmount: GOAL_AMOUNT,
         remainingAmount,
+        isGoalReached
       }}
     >
       {children}

@@ -90,6 +90,18 @@ const CausesDetailsLeft = ({ cause = {} }) => {
     }
   };
 
+  const isGoalReached = () => {
+    return raisedAmount >= goalNumber;
+  };
+
+  const handleDonateClick = () => {
+    if (isGoalReached()) {
+      alert('Thank you for your interest! This campaign has reached its goal.');
+      return;
+    }
+    setShowDonationModal(true);
+  };
+
   if (!cause) {
     return <div>Loading...</div>;
   }
@@ -142,14 +154,20 @@ const CausesDetailsLeft = ({ cause = {} }) => {
         <div className="causes-details__share-btn-box">
           <button
             className="causes-details__share-btn thm-btn"
-            onClick={() => setShowDonationModal(true)}
+            onClick={handleDonateClick}
+            disabled={isGoalReached()}
+            style={{
+              opacity: isGoalReached() ? 0.5 : 1,
+              cursor: isGoalReached() ? 'not-allowed' : 'pointer'
+            }}
           >
-            <i className="fas fa-arrow-circle-right"></i>Donate Us Now
+            <i className="fas fa-arrow-circle-right"></i>
+            {isGoalReached() ? 'Goal Reached' : 'Donate Us Now'}
           </button>
         </div>
       </div>
 
-      {showDonationModal && (
+      {showDonationModal && !isGoalReached() && (
         <div className="donation-modal">
           <div className="donation-modal-content">
             <button 
